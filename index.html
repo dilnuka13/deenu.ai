@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DeeNU.Ai - Next Level Generative AI</title>
+    <!-- New Favicon -->
+    <link rel="icon" href="https://dilnuka13.github.io/AL/favicon.ico" type="image/x-icon">
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Load Marked.js for Markdown parsing -->
@@ -28,41 +30,94 @@
             align-items: center;
             justify-content: center;
             transition: background-color 0.3s;
+            overflow: hidden; /* Prevent scrollbars from page load animation */
         }
 
         /* --- Theme Switching --- */
         .dark-mode { background: var(--color-bg-dark); color: var(--color-text-light); }
         .light-mode { background: var(--color-bg-light); color: var(--color-text-dark); }
 
+        /* --- RESPONSIVE LAYOUT (MOBILE-FIRST) --- */
+
+        /* Chat Container: Full screen on mobile, constrained on desktop */
         #chat-container {
-            height: 95vh;
-            width: 95vw;
-            max-width: 1200px;
+            height: 100vh; /* Full height on mobile */
+            width: 100vw; /* Full width on mobile */
+            border-radius: 0; /* No radius on mobile */
             display: flex;
-            border-radius: 1.5rem;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
             overflow: hidden;
+            /* NEW: Added animate-load-in class */
+            opacity: 0; /* Start hidden for animation */
         }
+        @media (min-width: 768px) { /* md breakpoint */
+            #chat-container {
+                height: 95vh;
+                width: 95vw;
+                max-width: 1200px;
+                border-radius: 1.5rem;
+            }
+        }
+
+        /* Sidebar: Hidden off-canvas on mobile, visible on desktop */
         #sidebar {
+            position: fixed; /* Off-canvas */
+            inset-y: 0;
+            left: 0;
             width: 300px;
-            transition: transform 0.3s;
+            z-index: 40;
+            transition: transform 0.3s ease-in-out;
+            transform: translateX(-100%); /* Hidden by default */
+            border-right: 1px solid rgba(255, 255, 255, 0.1);
             background-color: var(--color-card-dark);
             color: var(--color-text-light);
-            border-right: 1px solid rgba(255, 255, 255, 0.1);
-            flex-shrink: 0;
+            /* Removed flex-shrink-0 */
         }
+        #sidebar.sidebar-open {
+            transform: translateX(0); /* JS-toggled class */
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            #sidebar {
+                position: relative; /* Back to in-flow */
+                transform: translateX(0);
+                flex-shrink: 0; /* Add flex-shrink back for desktop */
+            }
+        }
+        .light-mode #sidebar {
+             background-color: var(--color-card-light);
+             border-right-color: #e5e7eb;
+             color: var(--color-text-dark);
+        }
+
+        /* Main Chat Area: Full width on mobile, flex-grow on desktop */
         #main-chat-area {
-            flex-grow: 1;
+            width: 100%;
+            flex-grow: 1; /* Already set, but good to confirm */
             display: flex;
             flex-direction: column;
             background-color: var(--color-bg-dark);
         }
 
-        /* Theming for Dark/Light Mode */
-        .dark-mode #main-chat-area { background-color: var(--color-bg-dark); }
-        .light-mode #main-chat-area { background-color: var(--color-bg-light); }
-        .dark-mode .app-card { background-color: var(--color-card-dark); border-color: #374151; }
-        .light-mode .app-card { background-color: var(--color-card-light); border-color: #e5e7eb; }
+        /* Modals: Constrain width on small screens */
+        .modal-content {
+            width: 90vw;
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            .modal-content {
+                width: 100%; /* Reset to allow max-w-md to take over */
+            }
+        }
+
+        /* Footer: Hidden on mobile, fixed on desktop */
+        footer {
+            display: none; /* Hidden on mobile */
+        }
+        @media (min-width: 768px) { /* md breakpoint */
+            footer {
+                display: block; /* Visible on desktop */
+            }
+        }
+
 
         /* Chat History Styles */
         #chat-history {
@@ -120,17 +175,118 @@
         .modal-content {
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
+
+        /* Custom Select Dropdown Styles */
+        select {
+           -webkit-appearance: none;
+           -moz-appearance: none;
+           appearance: none;
+           background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20fill%3D%22%239CA3AF%22%3E%3Cpath%20d%3D%22M5.293%207.293a1%201%200%20011.414%200L10%2010.586l3.293-3.293a1%201%200%20111.414%201.414l-4%204a1%201%200%2001-1.414%200l-4-4a1%201%200%20010-1.414z%22%20%2F%3E%3C%2Fsvg%3E');
+           background-repeat: no-repeat;
+           background-position: right 0.5rem center;
+           background-size: 1.5em;
+           padding-right: 2.5rem; /* Make space for arrow */
+        }
+        .dark-mode select {
+            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20fill%3D%22%239CA3AF%22%3E%3Cpath%20d%3D%22M5.293%207.293a1%201%200%20011.414%200L10%2010.586l3.293-3.293a1%201%200%20111.414%201.414l-4%204a1%201%200%2001-1.414%200l-4-4a1%201%200%20010-1.414z%22%20%2F%3E%3C%2Fsvg%3E');
+        }
+        /* Style for options in dropdown */
+        select option {
+            background-color: var(--color-bg-dark);
+            color: var(--color-text-light);
+        }
+        .light-mode select option {
+            background-color: var(--color-bg-light);
+            color: var(--color-text-dark);
+        }
+
+        /* --- NEW: GLASSMORPHISM EFFECT --- */
+        .glass-effect {
+            /* Fallback color */
+            background-color: var(--color-card-dark);
+            
+            /* Glass effect */
+            @supports (backdrop-filter: blur(16px)) {
+                background-color: rgba(31, 41, 55, 0.7); /* dark:bg-gray-800/70 */
+                backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px); /* Safari support */
+            }
+        }
+        .light-mode .glass-effect {
+            background-color: var(--color-card-light);
+            
+            @supports (backdrop-filter: blur(16px)) {
+                 background-color: rgba(255, 255, 255, 0.7); /* light:bg-white/70 */
+                 backdrop-filter: blur(16px);
+                -webkit-backdrop-filter: blur(16px);
+            }
+        }
+        /* Ensure sidebar border is visible with glass */
+        .dark-mode #sidebar.glass-effect {
+            border-right-color: rgba(55, 65, 81, 0.5);
+        }
+        .light-mode #sidebar.glass-effect {
+            border-right-color: rgba(229, 231, 235, 0.5);
+        }
+
+
+        /* --- NEW: ANIMATION KEYFRAMES --- */
+        @keyframes loadIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.95); }
+            to { opacity: 1; transform: scale(1); }
+        }
+        @keyframes slideInFade {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes pulseOpacity {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.6; }
+        }
+
+        /* --- NEW: ANIMATION HELPER CLASSES --- */
+        .animate-load-in {
+            opacity: 1; /* Make visible for animation */
+            animation: loadIn 0.6s ease-out forwards;
+        }
+        .animate-fade-in-scale {
+            animation: fadeInScale 0.3s ease-out forwards;
+        }
+        .message-bubble-animate {
+            animation: slideInFade 0.4s ease-out forwards;
+        }
+        .animate-pulse-opacity {
+            animation: pulseOpacity 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
     </style>
 </head>
 <body class="dark-mode">
 
-    <div id="chat-container" class="dark-mode app-card">
+    <!-- NEW: Sidebar Overlay for mobile -->
+    <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden"></div>
+
+    <!-- NEW: Added animate-load-in class -->
+    <div id="chat-container" class="dark-mode app-card animate-load-in">
         <!-- Sidebar for History, Code Panel, and Account -->
-        <div id="sidebar" class="p-4 flex flex-col app-card">
+        <!-- NEW: Added glass-effect class -->
+        <div id="sidebar" class="p-4 flex flex-col app-card glass-effect">
+            <!-- NEW: Sidebar Header for Mobile -->
+            <div class="flex justify-between items-center mb-4 md:hidden">
+                <h2 class="text-xl font-bold text-white">DeeNU.Ai Menu</h2>
+                <button id="sidebar-close" class="p-2 rounded-md text-gray-400 hover:text-white">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
+                </button>
+            </div>
+
             <!-- User Status & Logo -->
             <div class="mb-6 pb-4 border-b border-gray-700 dark:border-gray-700">
                 <div class="flex items-center space-x-2">
-                    <img id="logo-img" src="favicon.ico.jpg" alt="DeeNU.Ai Logo" class="w-10 h-10 rounded-lg" onerror="this.src='https://placehold.co/40x40/10b981/FFF?text=D'; this.onerror=null;">
+                    <!-- Updated Logo SRC -->
+                    <img id="logo-img" src="https://dilnuka13.github.io/AL/favicon.ico" alt="DeeNU.Ai Logo" class="w-10 h-10 rounded-lg" onerror="this.src='https://placehold.co/40x40/10b981/FFF?text=D'; this.onerror=null;">
                     <h2 class="text-xl font-bold text-white">DeeNU.Ai</h2>
                 </div>
                 <p id="user-status" class="text-sm mt-2 text-gray-400">Loading user...</p>
@@ -138,12 +294,23 @@
             
             <!-- Navigation/Features -->
             <nav class="flex flex-col space-y-2 flex-grow">
+                <!-- New Chat Button -->
+                <button onclick="startNewChat()" class="flex items-center p-3 rounded-xl bg-primary text-white font-medium hover:bg-primary-darker transition duration-150 text-left">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
+                    New Chat
+                </button>
                 <button onclick="switchView('chat')" class="sidebar-nav-btn flex items-center p-3 rounded-xl hover:bg-gray-700 transition duration-150 text-left text-primary font-medium">
                     <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.693C3.021 15.174 2.5 13.538 2.5 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
                     Chat Assistant
                 </button>
+                <!-- Code Generation Button Added Back -->
+                <button onclick="switchView('coder')" class="sidebar-nav-btn flex items-center p-3 rounded-xl hover:bg-gray-700 transition duration-150 text-left text-white">
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
+                    Code Generation
+                </button>
+                <!-- NEW: Changed History Icon -->
                 <button onclick="switchView('history')" class="sidebar-nav-btn flex items-center p-3 rounded-xl hover:bg-gray-700 transition duration-150 text-left text-white">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13M18.66 12.56a8.9 8.9 0 00.34-.56c.39-.77.12-1.63-.52-2.18l-1.37-1.1c-.65-.54-1.5-.78-2.3-.64L14 8c-.68-.1-1.37-.1-2.06 0-1.74.25-3.18 1.69-3.43 3.43L8 14c.05.65.26 1.28.62 1.84l1.37 1.1c.64.54 1.5.78 2.3.64l.95-.15c.68-.1 1.37-.1 2.06 0 1.74.25 3.18 1.69 3.43 3.43l-.15.95"></path></svg>
+                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
                     Search History
                 </button>
             </nav>
@@ -164,44 +331,62 @@
         <!-- Main Content Area -->
         <div id="main-chat-area">
             <!-- Header for Modes and Voice -->
-            <header class="p-4 flex justify-between items-center app-card border-b border-gray-700 dark:border-gray-700">
-                <div id="mode-selector" class="flex space-x-2 p-1 rounded-full bg-gray-600 dark:bg-gray-800">
-                    <button data-mode="normal" class="mode-btn px-4 py-2 text-sm rounded-full bg-primary text-white font-medium transition duration-150">Google Search Mode</button>
-                </div>
-                <button id="voice-toggle" class="p-2 rounded-full hover:bg-gray-700 transition duration-150 disabled:opacity-50" disabled>
-                    <svg id="mic-icon" class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7v0a7 7 0 01-7-7v-1.5a.5.5 0 01.5-.5h13a.5.5 0 01.5.5V11zM12 18v3m4-3h-8"></path></svg>
+            <!-- NEW: Added glass-effect class -->
+            <header class="p-4 flex justify-between items-center app-card border-b border-gray-700 dark:border-gray-700 glass-effect">
+                <!-- NEW: Hamburger Menu Toggle -->
+                <button id="menu-toggle" class="p-2 rounded-md text-gray-400 hover:text-white md:hidden">
+                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
                 </button>
+                <!-- Mode Selector Removed from Header -->
+                <h2 class="text-xl font-semibold text-white ml-2 md:ml-0">Chat</h2>
+                <!-- NEW: Voice Toggle Button Removed from Header -->
             </header>
 
             <!-- Chat View (Default) -->
-            <div id="view-chat" class="flex flex-col flex-grow h-full">
+            <div id="view-chat" class="flex flex-col flex-grow">
                 <div id="chat-history" class="flex-grow overflow-y-auto p-6">
-                    <div id="initial-message" class="model-message">
+                    <!-- Updated Initial Message with Avatar -->
+                    <div id="initial-message" class="message flex model-message items-start space-x-3">
+                        <img src="https://dilnuka13.github.io/AL/favicon.ico" alt="DeeNU Avatar" class="w-8 h-8 rounded-full flex-shrink-0 mt-1" onerror="this.src='https://placehold.co/40x40/10b981/FFF?text=D'; this.onerror=null;">
                         <div class="model-bubble">
-                            ආයුබෝවන්! මම **DeeNU.Ai**. (Google Search)
+                            ආයුබෝවන්! මම **DeeNU.Ai**.
                             <br>
                             කරුණාකර ආරම්භ කිරීමට ලොගින් වන්න, නැතහොත් නව ගිණුමක් සාදන්න.
                             <br>
-                            *English: Welcome to **DeeNU.Ai** (Google Search). Please log in or create an account to begin.*
+                            *English: Welcome to **DeeNU.Ai**. Please log in or create an account to begin.*
                         </div>
                     </div>
                 </div>
 
-                <!-- Input Form -->
-                <div class="p-4 app-card border-t border-gray-700 dark:border-gray-700">
-                    <form id="chat-form" class="flex space-x-3">
-                        <input
-                            type="text"
-                            id="user-input"
-                            placeholder="Type your message here..."
-                            autocomplete="off"
-                            required
-                            class="flex-grow p-3 rounded-xl bg-gray-600 dark:bg-gray-800 border border-gray-600 dark:border-gray-800 focus:ring-primary focus:border-primary text-white placeholder-gray-400 transition duration-150"
-                        >
+                <!-- Input Form - Updated Layout -->
+                <!-- NEW: Added glass-effect class -->
+                <div class="p-4 app-card border-t border-gray-700 dark:border-gray-700 glass-effect">
+                    <form id="chat-form" class="flex items-center space-x-3">
+                        <!-- Wrapper for input and dropdown -->
+                        <div class="flex-grow flex items-center border border-gray-600 rounded-xl bg-gray-600 dark:bg-gray-800 focus-within:ring-2 focus-within:ring-primary">
+                            <!-- NEW: Mic Button Added Here -->
+                            <button type="button" id="voice-toggle" class="p-3 text-gray-400 hover:text-white transition duration-150 disabled:opacity-50" disabled>
+                                <svg id="mic-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7v0a7 7 0 01-7-7v-1.5a.5.5 0 01.5-.5h13a.5.5 0 01.5.5V11zM12 18v3m4-3h-8"></path></svg>
+                            </button>
+                            <input
+                                type="text"
+                                id="user-input"
+                                placeholder="Type your message here..."
+                                autocomplete="off"
+                                required
+                                class="flex-grow p-3 bg-transparent border-none focus:ring-0 text-white placeholder-gray-400"
+                            >
+                            <!-- New Model Selector -->
+                            <select id="model-selector" class="bg-transparent text-white border-none border-l border-gray-700 p-3 focus:ring-0 cursor-pointer text-sm">
+                                <option value="normal" selected>Google</option>
+                                <option value="pro">DeeNU Flash</option>
+                                <option value="deep">DeeNU Pro</option>
+                            </select>
+                        </div>
                         <button
                             type="submit"
                             id="send-button"
-                            class="bg-primary hover:bg-primary-darker text-white font-bold py-3 px-6 rounded-xl transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-primary/30"
+                            class="bg-primary hover:bg-primary-darker text-white font-bold py-3 px-6 rounded-xl transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-primary/30 flex-shrink-0"
                             disabled
                         >
                             <svg id="send-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
@@ -221,14 +406,58 @@
                     <li class="text-gray-400 italic">History will load here once you sign in and start chatting.</li>
                 </ul>
             </div>
+
+            <!-- Code Generation Panel View (Added Back) -->
+            <div id="view-coder" class="hidden flex-col flex-grow p-6">
+                <h2 class="text-2xl font-bold mb-4">Code Generation Panel</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-grow h-[calc(95vh-200px)]">
+                    <!-- Code Prompt Input -->
+                    <div class="flex flex-col">
+                        <label for="code-prompt" class="font-medium mb-2">Code Request:</label>
+                        <textarea id="code-prompt" class="w-full h-32 p-3 rounded-lg bg-gray-600 dark:bg-gray-800 border focus:ring-primary focus:border-primary text-white placeholder-gray-400" placeholder="e.g., Write a responsive React component for a calculator." required></textarea>
+                        <label for="code-language" class="font-medium mt-4 mb-2">Language/Framework:</label>
+                        <select id="code-language" class="p-3 rounded-lg bg-gray-600 dark:bg-gray-800 border focus:ring-primary focus:border-primary text-white">
+                            <option value="react">React (JSX)</option>
+                            <option value="html">HTML/CSS/JS (Single File)</option>
+                            <option value="python">Python</option>
+                            <option value="angular">Angular</option>
+                            <option value="markdown">Markdown/Text</option>
+                        </select>
+                        <button id="generate-code-btn" class="mt-4 bg-primary hover:bg-primary-darker text-white font-bold py-3 rounded-xl transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed">Generate Code</button>
+                    </div>
+
+                    <!-- Code Output -->
+                    <div class="flex flex-col h-full">
+                        <label class="font-medium mb-2">Generated Code:</label>
+                        <textarea id="code-output" class="flex-grow w-full p-3 rounded-lg bg-gray-900 text-green-300 font-mono text-sm resize-none" readonly placeholder="Your generated code will appear here..."></textarea>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 
+   
+
+
     <!-- --- MODALS --- -->
+
+    <!-- Welcome Modal (NEW) -->
+    <div id="welcome-modal" class="modal fixed inset-0 flex items-center justify-center z-50"> <!-- Not hidden by default -->
+        <!-- NEW: Added animate-fade-in-scale, w-[90vw], and glass-effect -->
+        <div class="modal-content p-8 rounded-2xl w-[90vw] max-w-md app-card text-center animate-fade-in-scale glass-effect">
+            <img src="https://dilnuka13.github.io/AL/favicon.ico" alt="DeeNU.Ai Logo" class="w-20 h-20 rounded-lg mx-auto mb-4" onerror="this.src='https://placehold.co/80x80/10b981/FFF?text=D'; this.onerror=null;">
+            <h2 class="text-3xl font-bold mb-4 text-primary">Welcome to DeeNU.Ai</h2>
+            <!-- Creator Name Removed as requested -->
+            <p class="text-lg text-gray-300 mb-6">Your AI assistant is ready.</p>
+            <p class="text-sm text-gray-400 mb-8">Please log in or sign up to continue.</p>
+            <button onclick="continueToAuth()" class="w-full bg-primary hover:bg-primary-darker text-white font-bold py-3 rounded-xl transition duration-150">Get Started</button>
+        </div>
+    </div>
 
     <!-- Auth Modal (Sign Up, Login, Forgot Password) -->
     <div id="auth-modal" class="modal fixed inset-0 flex items-center justify-center hidden">
-        <div class="modal-content p-8 rounded-2xl w-full max-w-md app-card">
+        <!-- NEW: Added animate-fade-in-scale, w-[90vw], and glass-effect -->
+        <div class="modal-content p-8 rounded-2xl w-[90vw] max-w-md app-card animate-fade-in-scale glass-effect">
             <h2 id="auth-title" class="text-2xl font-bold mb-6 text-primary">Login</h2>
             <form id="auth-form" class="space-y-4">
                 <div id="name-group" class="hidden">
@@ -259,7 +488,8 @@
 
     <!-- Settings Modal -->
     <div id="settings-modal" class="modal fixed inset-0 flex items-center justify-center hidden">
-        <div class="modal-content p-8 rounded-2xl w-full max-w-md app-card">
+        <!-- NEW: Added animate-fade-in-scale, w-[90vw], and glass-effect -->
+        <div class="modal-content p-8 rounded-2xl w-[90vw] max-w-md app-card animate-fade-in-scale glass-effect">
             <h2 class="text-2xl font-bold mb-6 text-primary">Settings</h2>
             
             <!-- Theme Selection -->
@@ -279,7 +509,8 @@
                     <p><strong>Name:</strong> Isara Dilnuka</p>
                     <p><strong>Email:</strong> <a href="mailto:in.fo.dilnuka@outlook.com" class="text-primary hover:underline">in.fo.dilnuka@outlook.com</a></p>
                     <p><strong>Website:</strong> <a href="https://dilnuka13.github.io/my/" target="_blank" class="text-primary hover:underline">https://dilnuka13.github.io/my/</a></p>
-                    <p><strong>YouTube:</strong> <a href="https://www.youtube.com/@IsaraDilnuka" target="_blank" class="text-primary hover:underline">Isara Dilnuka (YouTube)</a></p>
+                    <!-- NEW: Updated YouTube Link -->
+                    <p><strong>YouTube:</strong> <a href="https://www.youtube.com/@dilnuka.13x" target="_blank" class="text-primary hover:underline">Isara Dilnuka (YouTube)</a></p>
                 </div>
             </div>
             
@@ -308,11 +539,15 @@
         
         let user = null; // Supabase user object
         let recognition = null; // Web Speech API instance
-        const currentChatMode = 'normal'; // Hard-code to Google Search mode
+        let currentChatMode = 'normal'; // Default mode
+        let inMemoryChatHistory = []; // In-memory history for the current session
 
         // --- GEMINI API SETUP ---
         const LLM_MODEL = "gemini-2.5-flash-preview-09-2025";
         const SYSTEM_INSTRUCTION_NORMAL = "You are DeeNU.Ai, a helpful and sophisticated AI assistant powered by Google, specializing in generating responses grounded in real-time search results. Keep your answers clear, concise, and professional. Use markdown for formatting.";
+        const SYSTEM_INSTRUCTION_PRO = "You are DeeNU.Ai Pro Mode (Flash), a creative and advanced AI assistant powered by Google. Respond thoughtfully and provide deep insights. Do NOT use external search tools. Use markdown for formatting.";
+        const SYSTEM_INSTRUCTION_DEEP = "You are DeeNU.Ai Pro (Deep Search), a highly advanced AI assistant. Your goal is to provide deep, comprehensive, and insightful answers, using Google Search results to gather extensive information. Synthesize findings, analyze deeply, and provide expert-level explanations.";
+        const SYSTEM_INSTRUCTION_CODE = "You are DeeNU.Ai Code Generator. Your response MUST ONLY contain the complete code block requested by the user, wrapped in appropriate language markdown (e.g., ```html, ```javascript). Provide NO additional conversational text, introductions, or explanations outside the code block.";
         
         // --- DOM ELEMENTS ---
         const body = document.body;
@@ -326,12 +561,26 @@
         const authButton = document.getElementById('auth-button');
         const voiceToggle = document.getElementById('voice-toggle');
         const initialMessage = document.getElementById('initial-message');
+        const modelSelector = document.getElementById('model-selector'); // New model selector
+
+        // NEW: Responsive DOM Elements
+        const menuToggle = document.getElementById('menu-toggle');
+        const sidebarOverlay = document.getElementById('sidebar-overlay');
+        const sidebar = document.getElementById('sidebar');
+        const sidebarClose = document.getElementById('sidebar-close');
 
         // Views
         const viewChat = document.getElementById('view-chat');
         const viewHistory = document.getElementById('view-history');
-        const views = { chat: viewChat, history: viewHistory };
+        const viewCoder = document.getElementById('view-coder'); // Added Coder view
+        const views = { chat: viewChat, history: viewHistory, coder: viewCoder }; // Added Coder
         
+        // Code Panel Elements (Added Back)
+        const codePrompt = document.getElementById('code-prompt');
+        const codeLanguage = document.getElementById('code-language');
+        const codeOutput = document.getElementById('code-output');
+        const generateCodeBtn = document.getElementById('generate-code-btn');
+
         // History List
         const historyList = document.getElementById('history-list');
 
@@ -359,6 +608,18 @@
         };
 
         // --- UI UTILITIES (Modals, Views, Loading) ---
+        
+        // NEW: Sidebar Functions
+        function openSidebar() {
+            sidebar.classList.add('sidebar-open');
+            sidebarOverlay.classList.remove('hidden');
+        }
+
+        function closeSidebar() {
+            sidebar.classList.remove('sidebar-open');
+            sidebarOverlay.classList.add('hidden');
+        }
+
 
         window.openModal = (id) => {
             document.getElementById(`${id}-modal`).classList.remove('hidden');
@@ -367,6 +628,30 @@
         window.closeModal = (id) => {
             document.getElementById(`${id}-modal`).classList.add('hidden');
         };
+
+        // New Welcome Modal Logic
+        window.continueToAuth = () => {
+            closeModal('welcome');
+            // Auth listener (onAuthStateChange) already ran.
+            // If user is null, we must prompt them to log in.
+            if (!user) {
+                handleAuthClick(); // Open the login modal
+            }
+        };
+
+        // New Chat Function
+        window.startNewChat = () => {
+            inMemoryChatHistory = []; // Clear in-memory history
+            chatHistoryDiv.innerHTML = ''; // Clear UI
+            chatHistoryDiv.appendChild(initialMessage); // Show welcome
+            initialMessage.classList.remove('hidden');
+            switchView('chat'); // Switch back to chat view
+
+            // NEW: Close sidebar on mobile after navigation
+            if (window.innerWidth < 768) {
+                closeSidebar();
+            }
+        }
 
         window.switchView = (viewName) => {
             Object.keys(views).forEach(key => views[key].classList.add('hidden'));
@@ -377,7 +662,7 @@
             }
 
             // Highlight button in sidebar
-            document.querySelectorAll('#sidebar nav button').forEach(btn => {
+            document.querySelectorAll('#sidebar nav button.sidebar-nav-btn').forEach(btn => {
                 btn.classList.remove('text-primary');
                 btn.classList.add('text-white');
                 if (btn.onclick && btn.onclick.toString().includes(`switchView('${viewName}')`)) {
@@ -385,14 +670,24 @@
                     btn.classList.remove('text-white');
                 }
             });
+
+            // NEW: Close sidebar on mobile after navigation
+            if (window.innerWidth < 768) {
+                closeSidebar();
+            }
         };
 
         function toggleLoading(isLoading) {
             userInput.disabled = isLoading;
-            // Send button state is also controlled by auth status (see updateAuthUI)
+            modelSelector.disabled = isLoading; // Disable dropdown
             sendButton.disabled = isLoading || !user; 
             sendIcon.classList.toggle('hidden', isLoading);
             loadingSpinner.classList.toggle('hidden', !isLoading);
+
+            // Toggle Code button
+            if (generateCodeBtn) {
+                generateCodeBtn.disabled = isLoading || !user;
+            }
         }
 
         function scrollToBottom() {
@@ -401,11 +696,31 @@
 
         function createMessageElement(message) {
             const messageElement = document.createElement('div');
-            messageElement.className = `message flex ${message.role === 'user' ? 'user-message' : 'model-message'}`;
+            
+            // NEW: Add animation class to all messages
+            messageElement.classList.add('message-bubble-animate');
+
+            // Add Avatar for Model
+            if (message.role === 'model') {
+                messageElement.className += ` message flex model-message items-start space-x-3`;
+                const avatar = document.createElement('img');
+                avatar.src = 'https://dilnuka13.github.io/AL/favicon.ico';
+                avatar.alt = 'DeeNU Avatar';
+                avatar.className = 'w-8 h-8 rounded-full flex-shrink-0 mt-1';
+                avatar.onerror = function() { this.src='https://placehold.co/40x40/10b981/FFF?text=D'; this.onerror=null; };
+                messageElement.appendChild(avatar);
+            } else {
+                messageElement.className += ` message flex user-message`;
+            }
 
             const bubble = document.createElement('div');
             bubble.className = message.role === 'user' ? 'user-bubble' : 'model-bubble';
             
+            // NEW: Add pulse animation for thinking
+            if (message.status === 'thinking') {
+                bubble.classList.add('animate-pulse-opacity');
+            }
+
             let htmlContent = message.text ? marked.parse(message.text) : (message.status === 'thinking' ? '<span class="text-gray-400 italic">DeeNU.Ai is thinking...</span>' : '');
 
             let bubbleContent = htmlContent;
@@ -626,9 +941,11 @@
                 sendButton.disabled = false;
                 userInput.disabled = false;
                 userInput.placeholder = "Type your message here...";
+                modelSelector.disabled = false;
                 closeModal('auth');
                 // Fetch history after successful login
-                fetchHistory();
+                fetchHistory(); // This will load history into the history tab
+                startNewChat(); // Start with a fresh chat screen
             } else {
                 userStatus.textContent = 'Not Signed In';
                 authButton.innerHTML = `<svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>Login / Sign Up`;
@@ -636,9 +953,14 @@
                 sendButton.disabled = true;
                 userInput.disabled = true;
                 userInput.placeholder = "Please log in to start chatting.";
+                modelSelector.disabled = true;
                 chatHistoryDiv.innerHTML = ''; // Clear chat history on logout
                 chatHistoryDiv.appendChild(initialMessage);
                 historyList.innerHTML = '<li class="text-gray-400 italic">History will load here once you sign in and start chatting.</li>';
+                inMemoryChatHistory = []; // Clear in-memory history on logout
+
+                // If user logs out, show welcome modal again, which will force login
+                openModal('welcome');
             }
         };
 
@@ -722,13 +1044,16 @@
         const saveMessage = async (role, text, sources = []) => {
             if (!user) return console.error("User not authenticated for saving message.");
             
+            // Get mode from the dropdown
+            const modeToSave = modelSelector.value || 'normal';
+
             const { error } = await supabase
                 .from('messages')
                 .insert([{
                     user_id: user.id,
                     role,
                     text,
-                    mode: currentChatMode, // Always 'normal'
+                    mode: modeToSave, // Save the mode used for this message
                     sources: JSON.stringify(sources), 
                     created_at: new Date().toISOString()
                 }]);
@@ -748,31 +1073,10 @@
 
             if (error) {
                 console.error("Error fetching history:", error);
-                chatHistoryDiv.innerHTML = '<div class="text-red-500">Error loading chat history.</div>';
+                // Only update history list, not the main chat
                 historyList.innerHTML = '<li class="text-red-500">Error loading history.</li>';
                 return;
             }
-
-            // Render Chat View
-            chatHistoryDiv.innerHTML = '';
-            if (messages.length > 0) {
-                if(initialMessage) initialMessage.classList.add('hidden');
-            } else {
-                 if(initialMessage) initialMessage.classList.remove('hidden');
-            }
-
-            messages.forEach(msg => {
-                let sources = [];
-                try {
-                    // Handle sources being null, undefined, or invalid JSON
-                    sources = JSON.parse(msg.sources || '[]');
-                } catch (e) {
-                    console.warn("Could not parse sources:", msg.sources);
-                }
-                chatHistoryDiv.appendChild(createMessageElement({ ...msg, sources: sources }));
-            });
-
-            scrollToBottom();
             
             // Render History View
             historyList.innerHTML = '';
@@ -785,11 +1089,13 @@
                 const date = new Date(msg.created_at).toLocaleString();
                 const listItem = document.createElement('li');
                 listItem.className = 'p-3 rounded-lg app-card hover:ring-2 hover:ring-primary cursor-pointer transition duration-150';
-                listItem.innerHTML = `<span class="text-xs text-gray-400">[${date}] (${msg.mode})</span><br>${msg.text.substring(0, 80)}...`;
+                listItem.innerHTML = `<span class="text-xs text-gray-400">[${date}] (${msg.mode || 'chat'})</span><br>${msg.text.substring(0, 80)}...`;
                 historyList.appendChild(listItem);
             });
         };
 
+        // --- CHAT MODE LOGIC ---
+        // (This is now handled by the modelSelector dropdown, no separate function needed)
 
         // --- VOICE TYPING (WEB SPEECH API) ---
 
@@ -847,8 +1153,8 @@
 
 
         // --- GEMINI API CALL LOGIC (Google Search Only) ---
-
-        async function callGeminiApi(history, latestPrompt) {
+        // Updated to handle different modes
+        async function callGeminiApi(history, latestPrompt, mode) {
             const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${LLM_MODEL}:generateContent?key=${API_KEY}`;
             
             // Build Chat History
@@ -860,14 +1166,25 @@
             // Add latest prompt
             contents.push({ role: 'user', parts: [{ text: latestPrompt }] });
 
-            // Set Mode/Tools/System Instruction (Always Google Search)
-            const tools = [{ "google_search": {} }];
-            const systemInstruction = { parts: [{ text: SYSTEM_INSTRUCTION_NORMAL }] };
+            // Set Mode/Tools/System Instruction (Dynamic)
+            let tools = undefined;
+            let systemInstructionText = SYSTEM_INSTRUCTION_PRO; // Default to Pro/Flash
+            
+            if (mode === 'normal') { // Google
+                tools = [{ "google_search": {} }];
+                systemInstructionText = SYSTEM_INSTRUCTION_NORMAL;
+            } else if (mode === 'deep') { // Deenu Pro (Deep Search)
+                tools = [{ "google_search": {} }]; // Also uses search
+                systemInstructionText = SYSTEM_INSTRUCTION_DEEP;
+            } else if (mode === 'code') {
+                 systemInstructionText = SYSTEM_INSTRUCTION_CODE;
+            }
+            // 'pro' (Flash) will just use the default SYSTEM_INSTRUCTION_PRO (no tools)
 
             const payload = {
                 contents: contents,
                 tools: tools,
-                systemInstruction: systemInstruction
+                systemInstruction: { parts: [{ text: systemInstructionText }] }
             };
             
             let response;
@@ -918,59 +1235,94 @@
         chatForm.addEventListener('submit', async (e) => {
             e.preventDefault();
             const prompt = userInput.value.trim();
+            // Get current mode from dropdown
+            currentChatMode = modelSelector.value; 
             if (!prompt || !user) return; // Must be logged in
 
             toggleLoading(true);
             userInput.value = '';
 
-            // 1. Get current chat history for context
-            const { data: historyData, error: historyError } = await supabase
-                .from('messages')
-                .select('text, role')
-                .eq('user_id', user.id)
-                .order('created_at', { ascending: true })
-                .limit(50);
-
-            if (historyError) {
-                 console.error("Error fetching history for context:", historyError);
-                 toggleLoading(false);
-                 return;
-            }
+            // 1. Get current in-memory chat history for context
+            const historyData = [...inMemoryChatHistory]; // Use in-memory history
             
-            // 2. Save user message
+            // 2. Save user message to DB
             await saveMessage('user', prompt);
-
+            
+            // 3. Add user message to UI and in-memory history
+            const userMessage = { role: 'user', text: prompt };
+            inMemoryChatHistory.push(userMessage);
+            chatHistoryDiv.appendChild(createMessageElement(userMessage));
+            
             // Hide initial message if it's visible
             if(initialMessage) initialMessage.classList.add('hidden');
             
-            // Add user message to UI immediately (fetchHistory will replace this)
-            chatHistoryDiv.appendChild(createMessageElement({ role: 'user', text: prompt }));
             const tempMessage = chatHistoryDiv.appendChild(createMessageElement({ role: 'model', status: 'thinking' }));
             scrollToBottom();
 
             // 3. Call Gemini API
-            const { text: modelResponseText, sources } = await callGeminiApi(historyData, prompt);
+            const { text: modelResponseText, sources } = await callGeminiApi(historyData, prompt, currentChatMode);
 
-            // 4. Remove temp message and save model response
+            // 4. Remove temp message and save model response to DB
             tempMessage.remove();
             await saveMessage('model', modelResponseText, sources);
 
-            // 5. Refetch history to update the main view with the final, saved response
-            await fetchHistory();
+            // 5. Add model response to UI and in-memory history
+            const modelMessage = { role: 'model', text: modelResponseText, sources: sources };
+            inMemoryChatHistory.push(modelMessage);
+            chatHistoryDiv.appendChild(createMessageElement(modelMessage));
+            
+            scrollToBottom();
             
             toggleLoading(false);
             userInput.focus();
         });
         
+        // --- CODE GENERATION SUBMISSION (Added Back) ---
+
+        generateCodeBtn.addEventListener('click', async () => {
+            const prompt = codePrompt.value.trim();
+            const language = codeLanguage.value;
+            if (!prompt || !user) return;
+
+            toggleLoading(true);
+            codeOutput.value = "Generating code, please wait...";
+
+            const fullPrompt = `Generate a complete, single-file code implementation for the following request in ${language}: ${prompt}`;
+            
+            // Call API with empty history and 'code' mode
+            const { text: modelResponseText } = await callGeminiApi([], fullPrompt, 'code');
+            
+            let cleanCode = modelResponseText.trim();
+            if (cleanCode.startsWith("```")) {
+                cleanCode = cleanCode.substring(cleanCode.indexOf('\n') + 1);
+            }
+            if (cleanCode.endsWith("```")) {
+                cleanCode = cleanCode.substring(0, cleanCode.lastIndexOf("```"));
+            }
+            
+            codeOutput.value = cleanCode.trim();
+
+            toggleLoading(false);
+            
+            // Save to DB for history tab
+            await saveMessage('user', `CODE REQUEST: ${language} - ${prompt}`);
+            await saveMessage('model', `CODE OUTPUT GENERATED (See Code Panel).`);
+        });
+
+
         // --- INITIALIZATION ---
 
         function initializeApp() {
-            // 1. Check Auth State on load
+            // 1. Auth State listener (runs immediately)
             supabase.auth.onAuthStateChange((event, session) => {
                 if (session?.user) {
                     updateAuthUI(session.user);
+                    // If user is logged in, hide welcome modal (in case it's still open)
+                    closeModal('welcome');
                 } else {
                     updateAuthUI(null);
+                    // If user is not logged in, ensure welcome modal is visible
+                    openModal('welcome');
                 }
             });
         
@@ -988,8 +1340,17 @@
 
             // 4. Set initial view to chat
             switchView('chat'); 
+            // 5. Set initial mode in dropdown
+            modelSelector.value = currentChatMode;
             
-            console.log("DeeNU.Ai (Full-Featured) Initialized.");
+            // NEW: Add event listeners for sidebar
+            menuToggle.addEventListener('click', openSidebar);
+            sidebarOverlay.addEventListener('click', closeSidebar);
+            sidebarClose.addEventListener('click', closeSidebar);
+
+            console.log("DeeNU.Ai (Final Animated) Initialized.");
+
+            // Welcome modal is shown by default via HTML, auth listener will handle hiding it if needed
         }
         
         initializeApp();
