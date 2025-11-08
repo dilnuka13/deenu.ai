@@ -9,6 +9,8 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- Load Marked.js for Markdown parsing -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/marked/12.0.2/marked.min.js"></script>
+    <script type="module" src="./app.js"></script>
+
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap');
         :root {
@@ -938,5 +940,25 @@
         initializeApp();
 
     </script>
+    <script type="module">
+import { createClient } from 'https://esm.sh/@supabase/supabase-js';
+
+const supabase = createClient(
+  "YOUR_SUPABASE_URL",
+  "YOUR_SUPABASE_ANON_KEY"
+);
+
+// Google login callback handle
+supabase.auth.getSessionFromUrl().then(({ data, error }) => {
+  if (!error) {
+    console.log("✅ Login success!", data.session);
+
+    // OPTIONAL: remove token from URL
+    window.history.replaceState({}, document.title, "/deenu.ai/");
+  }
+});
+</script>
+
 </body>
 </html>
+
