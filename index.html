@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DeeNU.Ai - Next Level Generative AI</title>
-    <!-- New Favicon -->
     <link rel="icon" href="https://dilnuka13.github.io/AL/favicon.ico" type="image/x-icon">
     <!-- Load Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
@@ -30,27 +29,22 @@
             align-items: center;
             justify-content: center;
             transition: background-color 0.3s;
-            overflow: hidden; /* Prevent scrollbars from page load animation */
+            overflow: hidden; 
         }
 
-        /* --- Theme Switching --- */
         .dark-mode { background: var(--color-bg-dark); color: var(--color-text-light); }
         .light-mode { background: var(--color-bg-light); color: var(--color-text-dark); }
 
-        /* --- RESPONSIVE LAYOUT (MOBILE-FIRST) --- */
-
-        /* Chat Container: Full screen on mobile, constrained on desktop */
         #chat-container {
-            height: 100vh; /* Full height on mobile */
-            width: 100vw; /* Full width on mobile */
-            border-radius: 0; /* No radius on mobile */
+            height: 100vh; 
+            width: 100vw; 
+            border-radius: 0; 
             display: flex;
             box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
             overflow: hidden;
-            /* NEW: Added animate-load-in class */
-            opacity: 0; /* Start hidden for animation */
+            opacity: 0; 
         }
-        @media (min-width: 768px) { /* md breakpoint */
+        @media (min-width: 768px) {
             #chat-container {
                 height: 95vh;
                 width: 95vw;
@@ -59,98 +53,64 @@
             }
         }
 
-        /* Sidebar: Hidden off-canvas on mobile, visible on desktop */
         #sidebar {
-            position: fixed; /* Off-canvas */
+            position: fixed;
             inset-y: 0;
             left: 0;
             width: 300px;
             z-index: 40;
             transition: transform 0.3s ease-in-out;
-            transform: translateX(-100%); /* Hidden by default */
+            transform: translateX(-100%);
             border-right: 1px solid rgba(255, 255, 255, 0.1);
-            background-color: var(--color-card-dark);
-            color: var(--color-text-light);
-            /* Removed flex-shrink-0 */
         }
         #sidebar.sidebar-open {
-            transform: translateX(0); /* JS-toggled class */
+            transform: translateX(0);
         }
-        @media (min-width: 768px) { /* md breakpoint */
+        @media (min-width: 768px) {
             #sidebar {
-                position: relative; /* Back to in-flow */
+                position: relative;
                 transform: translateX(0);
-                flex-shrink: 0; /* Add flex-shrink back for desktop */
+                flex-shrink: 0;
             }
         }
         .light-mode #sidebar {
-             background-color: var(--color-card-light);
              border-right-color: #e5e7eb;
-             color: var(--color-text-dark);
         }
 
-        /* Main Chat Area: Full width on mobile, flex-grow on desktop */
-        #main-chat-area {
-            width: 100%;
-            flex-grow: 1; /* Already set, but good to confirm */
-            display: flex;
-            flex-direction: column;
-            background-color: var(--color-bg-dark);
-        }
-
-        /* Modals: Constrain width on small screens */
         .modal-content {
             width: 90vw;
         }
-        @media (min-width: 768px) { /* md breakpoint */
+        @media (min-width: 768px) { 
             .modal-content {
-                width: 100%; /* Reset to allow max-w-md to take over */
+                width: 100%; 
             }
         }
 
-        /* Footer: Hidden on mobile, fixed on desktop */
-        footer {
-            display: none; /* Hidden on mobile */
-        }
-        @media (min-width: 768px) { /* md breakpoint */
-            footer {
-                display: block; /* Visible on desktop */
-            }
-        }
-
-
-        /* Chat History Styles */
         #chat-history {
-            flex-grow: 1;
-            overflow-y: auto;
-            padding: 1.5rem;
             scroll-behavior: smooth;
         }
-        .message { margin-bottom: 1rem; }
-        .user-message { justify-content: flex-end; }
-        .model-message { justify-content: flex-start; }
+       
+        .user-bubble, .model-bubble {
+            padding: 0.75rem 1rem;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
         .user-bubble {
             background-color: var(--color-primary);
             color: white;
-            padding: 0.75rem 1rem;
             border-radius: 1.25rem 1.25rem 0.25rem 1.25rem;
-            max-width: 80%;
-            word-wrap: break-word;
         }
         .model-bubble {
             background-color: var(--color-card-dark);
             color: inherit;
-            padding: 0.75rem 1rem;
             border-radius: 1.25rem 1.25rem 1.25rem 0.25rem;
-            max-width: 80%;
-            word-wrap: break-word;
         }
         .light-mode .model-bubble {
             background-color: var(--color-card-light);
             border: 1px solid #e5e7eb;
             color: var(--color-text-dark);
         }
-        /* Style for TTS button inside bubble */
         .tts-button {
             margin-left: 0.75rem;
             padding: 0.4rem;
@@ -160,14 +120,12 @@
             transition: background-color 0.15s;
         }
 
-        /* Custom scrollbar */
         #chat-history::-webkit-scrollbar { width: 8px; }
         .dark-mode #chat-history::-webkit-scrollbar-thumb { background-color: #4b5563; }
         .dark-mode #chat-history::-webkit-scrollbar-track { background: var(--color-bg-dark); }
         .light-mode #chat-history::-webkit-scrollbar-thumb { background-color: #d1d5db; }
         .light-mode #chat-history::-webkit-scrollbar-track { background: var(--color-bg-light); }
 
-        /* Modal Styles */
         .modal {
             background: rgba(0, 0, 0, 0.7);
             z-index: 50;
@@ -176,1185 +134,809 @@
             box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
         }
 
-        /* Custom Select Dropdown Styles */
         select {
-           -webkit-appearance: none;
-           -moz-appearance: none;
-           appearance: none;
+           -webkit-appearance: none; -moz-appearance: none; appearance: none;
            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20fill%3D%22%239CA3AF%22%3E%3Cpath%20d%3D%22M5.293%207.293a1%201%200%20011.414%200L10%2010.586l3.293-3.293a1%201%200%20111.414%201.414l-4%204a1%201%200%2001-1.414%200l-4-4a1%201%200%20010-1.414z%22%20%2F%3E%3C%2Fsvg%3E');
            background-repeat: no-repeat;
            background-position: right 0.5rem center;
            background-size: 1.5em;
-           padding-right: 2.5rem; /* Make space for arrow */
+           padding-right: 2.5rem;
         }
-        .dark-mode select {
-            background-image: url('data:image/svg+xml;charset=US-ASCII,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2220%22%20height%3D%2220%22%20fill%3D%22%239CA3AF%22%3E%3Cpath%20d%3D%22M5.293%207.293a1%201%200%20011.414%200L10%2010.586l3.293-3.293a1%201%200%20111.414%201.414l-4%204a1%201%200%2001-1.414%200l-4-4a1%201%200%20010-1.414z%22%20%2F%3E%3C%2Fsvg%3E');
-        }
-        /* Style for options in dropdown */
-        select option {
-            background-color: var(--color-bg-dark);
-            color: var(--color-text-light);
-        }
-        .light-mode select option {
-            background-color: var(--color-bg-light);
-            color: var(--color-text-dark);
-        }
-
-        /* --- NEW: GLASSMORPHISM EFFECT --- */
+        
         .glass-effect {
-            /* Fallback color */
             background-color: var(--color-card-dark);
-            
-            /* Glass effect */
             @supports (backdrop-filter: blur(16px)) {
-                background-color: rgba(31, 41, 55, 0.7); /* dark:bg-gray-800/70 */
+                background-color: rgba(31, 41, 55, 0.7); 
                 backdrop-filter: blur(16px);
-                -webkit-backdrop-filter: blur(16px); /* Safari support */
+                -webkit-backdrop-filter: blur(16px);
             }
         }
         .light-mode .glass-effect {
             background-color: var(--color-card-light);
-            
             @supports (backdrop-filter: blur(16px)) {
-                 background-color: rgba(255, 255, 255, 0.7); /* light:bg-white/70 */
+                 background-color: rgba(255, 255, 255, 0.7);
                  backdrop-filter: blur(16px);
                 -webkit-backdrop-filter: blur(16px);
             }
         }
-        /* Ensure sidebar border is visible with glass */
-        .dark-mode #sidebar.glass-effect {
-            border-right-color: rgba(55, 65, 81, 0.5);
-        }
-        .light-mode #sidebar.glass-effect {
-            border-right-color: rgba(229, 231, 235, 0.5);
-        }
+        .dark-mode #sidebar.glass-effect { border-right-color: rgba(55, 65, 81, 0.5); }
+        .light-mode #sidebar.glass-effect { border-right-color: rgba(229, 231, 235, 0.5); }
 
-
-        /* --- NEW: ANIMATION KEYFRAMES --- */
-        @keyframes loadIn {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes fadeInScale {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
-        }
-        @keyframes slideInFade {
-            from { opacity: 0; transform: translateY(10px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes pulseOpacity {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.6; }
-        }
-
-        /* --- NEW: ANIMATION HELPER CLASSES --- */
-        .animate-load-in {
-            opacity: 1; /* Make visible for animation */
-            animation: loadIn 0.6s ease-out forwards;
-        }
-        .animate-fade-in-scale {
-            animation: fadeInScale 0.3s ease-out forwards;
-        }
-        .message-bubble-animate {
-            animation: slideInFade 0.4s ease-out forwards;
-        }
-        .animate-pulse-opacity {
-            animation: pulseOpacity 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite;
-        }
+        @keyframes loadIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInScale { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
+        @keyframes slideInFade { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes pulseOpacity { 0%, 100% { opacity: 1; } 50% { opacity: 0.6; } }
+        
+        .animate-load-in { opacity: 1 !important; animation: loadIn 0.6s ease-out forwards; }
+        .animate-fade-in-scale { animation: fadeInScale 0.3s ease-out forwards; }
+        .message-bubble-animate { animation: slideInFade 0.4s ease-out forwards; }
+        .animate-pulse-opacity { animation: pulseOpacity 1.5s cubic-bezier(0.4, 0, 0.6, 1) infinite; }
     </style>
 </head>
 <body class="dark-mode">
 
-    <!-- NEW: Sidebar Overlay for mobile -->
     <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-30 hidden md:hidden"></div>
-
-    <!-- NEW: Added animate-load-in class -->
-    <div id="chat-container" class="dark-mode app-card animate-load-in">
-        <!-- Sidebar for History, Code Panel, and Account -->
-        <!-- NEW: Added glass-effect class -->
-        <div id="sidebar" class="p-4 flex flex-col app-card glass-effect">
-            <!-- NEW: Sidebar Header for Mobile -->
+    
+    <div id="chat-container" class="animate-load-in">
+        <!-- Sidebar -->
+        <div id="sidebar" class="p-4 flex flex-col glass-effect">
             <div class="flex justify-between items-center mb-4 md:hidden">
-                <h2 class="text-xl font-bold text-white">DeeNU.Ai Menu</h2>
-                <button id="sidebar-close" class="p-2 rounded-md text-gray-400 hover:text-white">
+                <h2 class="text-xl font-bold">DeeNU.Ai Menu</h2>
+                <button id="sidebar-close-btn" class="p-2 rounded-md text-gray-400 hover:text-white">
                     <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>
                 </button>
             </div>
-
-            <!-- User Status & Logo -->
-            <div class="mb-6 pb-4 border-b border-gray-700 dark:border-gray-700">
-                <div class="flex items-center space-x-2">
-                    <!-- Updated Logo SRC -->
-                    <img id="logo-img" src="https://dilnuka13.github.io/AL/favicon.ico" alt="DeeNU.Ai Logo" class="w-10 h-10 rounded-lg" onerror="this.src='https://placehold.co/40x40/10b981/FFF?text=D'; this.onerror=null;">
-                    <h2 class="text-xl font-bold text-white">DeeNU.Ai</h2>
-                </div>
-                <p id="user-status" class="text-sm mt-2 text-gray-400">Loading user...</p>
+            <div class="mb-6 pb-4 border-b border-gray-700">
+                <div class="flex items-center space-x-2"><img src="https://dilnuka13.github.io/AL/favicon.ico" alt="DeeNU.Ai Logo" class="w-10 h-10 rounded-lg"/><h2 class="text-xl font-bold">DeeNU.Ai</h2></div>
+                <p id="user-status" class="text-sm mt-2 text-gray-400">Not Signed In</p>
+                <p id="anonymous-timer" class="text-sm mt-1 text-yellow-400 hidden"></p>
             </div>
-            
-            <!-- Navigation/Features -->
             <nav class="flex flex-col space-y-2 flex-grow">
-                <!-- New Chat Button -->
-                <button onclick="startNewChat()" class="flex items-center p-3 rounded-xl bg-primary text-white font-medium hover:bg-primary-darker transition duration-150 text-left">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg>
-                    New Chat
-                </button>
-                <button onclick="switchView('chat')" class="sidebar-nav-btn flex items-center p-3 rounded-xl hover:bg-gray-700 transition duration-150 text-left text-primary font-medium">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.693C3.021 15.174 2.5 13.538 2.5 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg>
-                    Chat Assistant
-                </button>
-                <!-- Code Generation Button Added Back -->
-                <button onclick="switchView('coder')" class="sidebar-nav-btn flex items-center p-3 rounded-xl hover:bg-gray-700 transition duration-150 text-left text-white">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg>
-                    Code Generation
-                </button>
-                <!-- NEW: Changed History Icon -->
-                <button onclick="switchView('history')" class="sidebar-nav-btn flex items-center p-3 rounded-xl hover:bg-gray-700 transition duration-150 text-left text-white">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                    Search History
-                </button>
+                <button id="new-chat-btn" class="flex items-center p-3 rounded-xl bg-[--color-primary] text-white font-medium hover:bg-[--color-primary-darker] transition text-left"><svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6"></path></svg> New Chat</button>
+                <button data-view="chat" class="sidebar-nav-btn flex items-center p-3 rounded-xl hover:bg-gray-700 transition text-left font-medium text-[--color-primary]"><svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.693C3.021 15.174 2.5 13.538 2.5 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"></path></svg> Chat Assistant</button>
+                <button data-view="coder" class="sidebar-nav-btn flex items-center p-3 rounded-xl hover:bg-gray-700 transition text-left"><svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4"></path></svg> Code Generation</button>
+                <button data-view="history" class="sidebar-nav-btn flex items-center p-3 rounded-xl hover:bg-gray-700 transition text-left"><svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg> Search History</button>
             </nav>
-
-            <!-- Footer/Settings -->
-            <div class="pt-4 border-t border-gray-700 dark:border-gray-700">
-                <button onclick="openModal('settings')" class="flex items-center p-3 rounded-xl hover:bg-gray-700 transition duration-150 text-left w-full text-white">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.56.34 1.235.54 1.945.54z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>
-                    Settings
-                </button>
-                <button id="auth-button" onclick="handleAuthClick()" class="flex items-center p-3 rounded-xl hover:bg-gray-700 transition duration-150 text-left w-full text-red-400">
-                    <svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>
-                    Login / Sign Up
-                </button>
+            <div class="pt-4 border-t border-gray-700">
+                <button id="settings-btn" class="flex items-center p-3 rounded-xl hover:bg-gray-700 transition text-left w-full"><svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.56.34 1.235.54 1.945.54z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"></path></svg> Settings</button>
+                <button id="auth-button" class="flex items-center p-3 rounded-xl hover:bg-gray-700 transition text-left w-full text-red-400"></button>
             </div>
         </div>
 
         <!-- Main Content Area -->
-        <div id="main-chat-area">
-            <!-- Header for Modes and Voice -->
-            <!-- NEW: Added glass-effect class -->
-            <header class="p-4 flex justify-between items-center app-card border-b border-gray-700 dark:border-gray-700 glass-effect">
-                <!-- NEW: Hamburger Menu Toggle -->
-                <button id="menu-toggle" class="p-2 rounded-md text-gray-400 hover:text-white md:hidden">
-                    <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg>
-                </button>
-                <!-- Mode Selector Removed from Header -->
-                <h2 class="text-xl font-semibold text-white ml-2 md:ml-0">Chat</h2>
-                <!-- NEW: Voice Toggle Button Removed from Header -->
+        <div id="main-chat-area" class="flex flex-col flex-grow bg-[--color-bg-dark]">
+            <header class="p-4 flex justify-between items-center border-b border-gray-700 glass-effect">
+                <button id="menu-toggle" class="p-2 rounded-md text-gray-400 hover:text-white md:hidden"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path></svg></button>
+                <h2 id="view-title" class="text-xl font-semibold ml-2 md:ml-0 capitalize">Chat</h2>
             </header>
-
-            <!-- Chat View (Default) -->
+            
+            <!-- Chat View -->
             <div id="view-chat" class="flex flex-col flex-grow">
-                <div id="chat-history" class="flex-grow overflow-y-auto p-6">
-                    <!-- Updated Initial Message with Avatar -->
-                    <div id="initial-message" class="message flex model-message items-start space-x-3">
-                        <img src="https://dilnuka13.github.io/AL/favicon.ico" alt="DeeNU Avatar" class="w-8 h-8 rounded-full flex-shrink-0 mt-1" onerror="this.src='https://placehold.co/40x40/10b981/FFF?text=D'; this.onerror=null;">
-                        <div class="model-bubble">
-                            ආයුබෝවන්! මම **DeeNU.Ai**.
-                            <br>
-                            කරුණාකර ආරම්භ කිරීමට ලොගින් වන්න, නැතහොත් නව ගිණුමක් සාදන්න.
-                            <br>
-                            *English: Welcome to **DeeNU.Ai**. Please log in or create an account to begin.*
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Input Form - Updated Layout -->
-                <!-- NEW: Added glass-effect class -->
-                <div class="p-4 app-card border-t border-gray-700 dark:border-gray-700 glass-effect">
+                <div id="chat-history" class="flex-grow overflow-y-auto p-6"></div>
+                <div class="p-4 border-t border-gray-700 glass-effect">
+                    <div id="attachment-preview" class="hidden relative items-center bg-gray-700 p-2 rounded-md mb-2 text-sm"></div>
                     <form id="chat-form" class="flex items-center space-x-3">
-                        <!-- Wrapper for input and dropdown -->
-                        <div class="flex-grow flex items-center border border-gray-600 rounded-xl bg-gray-600 dark:bg-gray-800 focus-within:ring-2 focus-within:ring-primary">
-                            <!-- NEW: Mic Button Added Here -->
-                            <button type="button" id="voice-toggle" class="p-3 text-gray-400 hover:text-white transition duration-150 disabled:opacity-50" disabled>
-                                <svg id="mic-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11a7 7 0 01-7 7v0a7 7 0 01-7-7v-1.5a.5.5 0 01.5-.5h13a.5.5 0 01.5.5V11zM12 18v3m4-3h-8"></path></svg>
-                            </button>
-                            <input
-                                type="text"
-                                id="user-input"
-                                placeholder="Type your message here..."
-                                autocomplete="off"
-                                required
-                                class="flex-grow p-3 bg-transparent border-none focus:ring-0 text-white placeholder-gray-400"
-                            >
-                            <!-- New Model Selector -->
-                            <select id="model-selector" class="bg-transparent text-white border-none border-l border-gray-700 p-3 focus:ring-0 cursor-pointer text-sm">
-                                <option value="normal" selected>Google</option>
-                                <option value="pro">DeeNU Flash</option>
-                                <option value="deep">DeeNU Pro</option>
+                        <div class="relative">
+                            <button type="button" id="attachment-btn" class="p-3 text-gray-400 hover:text-white transition disabled:opacity-50"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg></button>
+                            <div id="attachment-menu" class="hidden absolute bottom-full mb-2 w-48 bg-gray-800 rounded-lg shadow-xl py-1">
+                                <button type="button" id="upload-file-btn" class="w-full text-left flex items-center px-4 py-2 hover:bg-gray-700"><svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"></path></svg>Upload File</button>
+                                <button type="button" id="use-camera-btn" class="w-full text-left flex items-center px-4 py-2 hover:bg-gray-700"><svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z"></path><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 13a3 3 0 11-6 0 3 3 0 016 0z"></path></svg>Use Camera</button>
+                            </div>
+                        </div>
+                        <input id="file-input" type="file" accept="image/*,.txt" class="hidden" />
+                        <div class="flex-grow flex items-center border border-gray-600 rounded-xl bg-gray-800 focus-within:ring-2 focus-within:ring-[--color-primary]">
+                            <button type="button" id="mic-btn" class="p-3 text-gray-400 hover:text-white transition disabled:opacity-50"><svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M12 14c1.66 0 2.99-1.34 2.99-3L15 5c0-1.66-1.34-3-3-3S9 3.34 9 5v6c0 1.66 1.34 3 3 3zm5.3-3c0 3-2.54 5.1-5.3 5.1S6.7 14 6.7 11H5c0 3.41 2.72 6.23 6 6.72V21h2v-3.28c3.28-.49 6-3.31 6-6.72h-1.7z"></path></svg></button>
+                            <input id="user-input" type="text" placeholder="Please log in to start chatting." class="flex-grow p-3 bg-transparent border-none focus:ring-0 placeholder-gray-400" disabled />
+                            <select id="model-selector" class="bg-transparent border-none border-l border-gray-700 p-3 focus:ring-0 cursor-pointer text-sm" disabled>
+                                <option value="normal">Google</option><option value="pro">DeeNU Flash</option><option value="deep">DeeNU Pro</option>
                             </select>
                         </div>
-                        <button
-                            type="submit"
-                            id="send-button"
-                            class="bg-primary hover:bg-primary-darker text-white font-bold py-3 px-6 rounded-xl transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed shadow-lg shadow-primary/30 flex-shrink-0"
-                            disabled
-                        >
-                            <svg id="send-icon" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
-                            <svg id="loading-spinner" class="animate-spin h-5 w-5 text-white hidden" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
-                                <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
-                                <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
-                            </svg>
-                        </button>
+                        <button id="send-button" type="submit" class="bg-[--color-primary] hover:bg-[--color-primary-darker] text-white font-bold py-3 px-6 rounded-xl transition shadow-lg shadow-[--color-primary]/30 flex-shrink-0 disabled:opacity-50 disabled:cursor-not-allowed" disabled></button>
                     </form>
                 </div>
             </div>
             
-            <!-- Search History View -->
-            <div id="view-history" class="hidden flex-col flex-grow p-6 overflow-y-auto">
-                <h2 class="text-2xl font-bold mb-4">Search History</h2>
-                <ul id="history-list" class="space-y-3">
-                    <li class="text-gray-400 italic">History will load here once you sign in and start chatting.</li>
-                </ul>
-            </div>
-
-            <!-- Code Generation Panel View (Added Back) -->
-            <div id="view-coder" class="hidden flex-col flex-grow p-6">
-                <h2 class="text-2xl font-bold mb-4">Code Generation Panel</h2>
+            <!-- Coder View -->
+            <div id="view-coder" class="hidden flex-col flex-grow p-6 overflow-y-auto">
+                 <h2 class="text-2xl font-bold mb-4">Code Generation Panel</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-4 flex-grow h-[calc(95vh-200px)]">
-                    <!-- Code Prompt Input -->
                     <div class="flex flex-col">
                         <label for="code-prompt" class="font-medium mb-2">Code Request:</label>
-                        <textarea id="code-prompt" class="w-full h-32 p-3 rounded-lg bg-gray-600 dark:bg-gray-800 border focus:ring-primary focus:border-primary text-white placeholder-gray-400" placeholder="e.g., Write a responsive React component for a calculator." required></textarea>
+                        <textarea id="code-prompt" class="w-full h-32 p-3 rounded-lg bg-gray-800 border focus:ring-[--color-primary] focus:border-[--color-primary] placeholder-gray-400" placeholder="e.g., Write a responsive React component for a calculator." required></textarea>
                         <label for="code-language" class="font-medium mt-4 mb-2">Language/Framework:</label>
-                        <select id="code-language" class="p-3 rounded-lg bg-gray-600 dark:bg-gray-800 border focus:ring-primary focus:border-primary text-white">
-                            <option value="react">React (JSX)</option>
-                            <option value="html">HTML/CSS/JS (Single File)</option>
-                            <option value="python">Python</option>
-                            <option value="angular">Angular</option>
-                            <option value="markdown">Markdown/Text</option>
+                        <select id="code-language" class="p-3 rounded-lg bg-gray-800 border focus:ring-[--color-primary] focus:border-[--color-primary]">
+                            <option value="react">React (JSX)</option><option value="html">HTML/CSS/JS</option><option value="python">Python</option><option value="angular">Angular</option><option value="markdown">Markdown</option>
                         </select>
-                        <button id="generate-code-btn" class="mt-4 bg-primary hover:bg-primary-darker text-white font-bold py-3 rounded-xl transition duration-300 disabled:opacity-50 disabled:cursor-not-allowed">Generate Code</button>
+                        <button id="generate-code-btn" class="mt-4 bg-[--color-primary] hover:bg-[--color-primary-darker] font-bold py-3 rounded-xl transition disabled:opacity-50" disabled>Generate Code</button>
                     </div>
-
-                    <!-- Code Output -->
                     <div class="flex flex-col h-full">
-                        <label class="font-medium mb-2">Generated Code:</label>
+                         <div class="flex justify-between items-center mb-2">
+                             <label class="font-medium">Generated Code:</label>
+                             <button id="copy-code-btn" class="flex items-center text-xs px-2 py-1 bg-gray-700 rounded hover:bg-gray-600 disabled:opacity-50" disabled><svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> Copy</button>
+                        </div>
                         <textarea id="code-output" class="flex-grow w-full p-3 rounded-lg bg-gray-900 text-green-300 font-mono text-sm resize-none" readonly placeholder="Your generated code will appear here..."></textarea>
                     </div>
                 </div>
             </div>
+            
+            <!-- History View -->
+            <div id="view-history" class="hidden flex-col flex-grow p-6 overflow-y-auto">
+                <h2 class="text-2xl font-bold mb-4">Search History</h2>
+                <ul id="history-list" class="space-y-3"></ul>
+            </div>
         </div>
     </div>
 
-   
-
-
-    <!-- --- MODALS --- -->
-
-    <!-- Welcome Modal (NEW) -->
-    <div id="welcome-modal" class="modal fixed inset-0 flex items-center justify-center z-50"> <!-- Not hidden by default -->
-        <!-- NEW: Added animate-fade-in-scale, w-[90vw], and glass-effect -->
-        <div class="modal-content p-8 rounded-2xl w-[90vw] max-w-md app-card text-center animate-fade-in-scale glass-effect">
-            <img src="https://dilnuka13.github.io/AL/favicon.ico" alt="DeeNU.Ai Logo" class="w-20 h-20 rounded-lg mx-auto mb-4" onerror="this.src='https://placehold.co/80x80/10b981/FFF?text=D'; this.onerror=null;">
-            <h2 class="text-3xl font-bold mb-4 text-primary">Welcome to DeeNU.Ai</h2>
-            <!-- Creator Name Removed as requested -->
-            <p class="text-lg text-gray-300 mb-6">Your AI assistant is ready.</p>
-            <p class="text-sm text-gray-400 mb-8">Please log in or sign up to continue.</p>
-            <button onclick="continueToAuth()" class="w-full bg-primary hover:bg-primary-darker text-white font-bold py-3 rounded-xl transition duration-150">Get Started</button>
-        </div>
-    </div>
-
-    <!-- Auth Modal (Sign Up, Login, Forgot Password) -->
-    <div id="auth-modal" class="modal fixed inset-0 flex items-center justify-center hidden">
-        <!-- NEW: Added animate-fade-in-scale, w-[90vw], and glass-effect -->
-        <div class="modal-content p-8 rounded-2xl w-[90vw] max-w-md app-card animate-fade-in-scale glass-effect">
-            <h2 id="auth-title" class="text-2xl font-bold mb-6 text-primary">Login</h2>
-            <form id="auth-form" class="space-y-4">
-                <div id="name-group" class="hidden">
-                    <input type="text" id="auth-name" placeholder="Full Name (Isara Dilnuka)"  required class="w-full p-3 rounded-lg bg-gray-600 dark:bg-gray-800 border focus:ring-primary focus:border-primary text-white placeholder-gray-400">
-                </div>
-                <div id="dob-group" class="hidden">
-                    <input type="date" id="auth-dob" placeholder="Date of Birth"  required class="w-full p-3 rounded-lg bg-gray-600 dark:bg-gray-800 border focus:ring-primary focus:border-primary text-white placeholder-gray-400">
-                </div>
-                <div id="country-group" class="hidden">
-                    <input type="text" id="auth-country" placeholder="Country"  required class="w-full p-3 rounded-lg bg-gray-600 dark:bg-gray-800 border focus:ring-primary focus:border-primary text-white placeholder-gray-400">
-                </div>
-                <div id="display-name-group" class="hidden">
-                    <input type="text" id="auth-display-name" placeholder="Display Name (Isara Dilnuka)" required class="w-full p-3 rounded-lg bg-gray-600 dark:bg-gray-800 border focus:ring-primary focus:border-primary text-white placeholder-gray-400">
-                </div>
-                <input type="email" id="auth-email" placeholder="Email Address" required class="w-full p-3 rounded-lg bg-gray-600 dark:bg-gray-800 border focus:ring-primary focus:border-primary text-white placeholder-gray-400">
-                <div id="password-group">
-                    <input type="password" id="auth-password" placeholder="Password" required class="w-full p-3 rounded-lg bg-gray-600 dark:bg-gray-800 border focus:ring-primary focus:border-primary text-white placeholder-gray-400">
-                </div>
-
-                <button type="submit" id="auth-submit-btn" class="w-full bg-primary hover:bg-primary-darker text-white font-bold py-3 rounded-xl transition duration-150">Login</button>
+    <!-- MODALS -->
+    <div id="welcome-modal" class="modal fixed inset-0 flex items-center justify-center z-50"><div class="modal-content p-8 rounded-2xl max-w-md text-center animate-fade-in-scale glass-effect"><img src="https://dilnuka13.github.io/AL/favicon.ico" alt="DeeNU.Ai Logo" class="w-20 h-20 rounded-lg mx-auto mb-4" /><h2 class="text-3xl font-bold mb-4 text-[--color-primary]">Welcome to DeeNU.Ai</h2><p class="text-lg text-gray-300 mb-6">Your AI assistant is ready.</p><p class="text-sm text-gray-400 mb-8">Please log in or sign up to continue.</p><button id="get-started-btn" class="w-full bg-[--color-primary] hover:bg-[--color-primary-darker] text-white font-bold py-3 rounded-xl transition">Get Started</button></div></div>
+    
+    <div id="auth-modal" class="modal fixed inset-0 hidden items-center justify-center z-50">
+        <div class="modal-content p-8 rounded-2xl max-w-md w-full animate-fade-in-scale glass-effect">
+            <h2 id="auth-title" class="text-2xl font-bold mb-6 text-center text-[--color-primary]">Welcome Back</h2>
+            <div class="space-y-3 mb-4">
+                <button id="google-login-btn" class="w-full flex justify-center items-center gap-3 p-3 rounded-lg bg-gray-700 hover:bg-gray-600 transition"><svg class="w-5 h-5" viewBox="0 0 48 48"><path fill="#FFC107" d="M43.611,20.083H42V20H24v8h11.303c-1.649,4.657-6.08,8-11.303,8c-6.627,0-12-5.373-12-12c0-6.627,5.373-12,12-12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C12.955,4,4,12.955,4,24c0,11.045,8.955,20,20,20c11.045,0,20-8.955,20-20C44,22.659,43.862,21.35,43.611,20.083z"></path><path fill="#FF3D00" d="M6.306,14.691l6.571,4.819C14.655,15.108,18.961,12,24,12c3.059,0,5.842,1.154,7.961,3.039l5.657-5.657C34.046,6.053,29.268,4,24,4C16.318,4,9.656,8.337,6.306,14.691z"></path><path fill="#4CAF50" d="M24,44c5.166,0,9.86-1.977,13.409-5.192l-6.19-5.238C29.211,35.091,26.715,36,24,36c-5.222,0-9.612-3.28-11.28-7.94l-6.522,5.025C9.505,39.556,16.227,44,24,44z"></path><path fill="#1976D2" d="M43.611,20.083H42V20H24v8h11.303c-0.792,2.237-2.231,4.166-4.087,5.571l6.19,5.238C42.022,35.337,44,30.023,44,24C44,22.659,43.862,21.35,43.611,20.083z"></path></svg> Sign in with Google</button>
+                <button id="facebook-login-btn" class="w-full flex justify-center items-center gap-3 p-3 rounded-lg bg-gray-700 hover:bg-gray-600 transition"><svg class="w-5 h-5" viewBox="0 0 48 48"><path fill="#039be5" d="M24 5A19 19 0 1 0 24 43A19 19 0 1 0 24 5Z"></path><path fill="#fff" d="M26.572 29.036h4.917l-.772-4.995h-4.145v-3.282c0-1.438.396-2.417 2.458-2.417h2.616v-4.459c-.452-.06-2.007-.194-3.82-.194-3.784 0-6.364 2.308-6.364 6.54v3.69h-4.269v4.995h4.269v11.971h5.107V29.036z"></path></svg> Sign in with Facebook</button>
+            </div>
+            <div class="flex items-center my-6"><div class="flex-grow border-t border-gray-600"></div><span class="flex-shrink mx-4 text-gray-400">OR</span><div class="flex-grow border-t border-gray-600"></div></div>
+            <form id="email-auth-form" class="space-y-4">
+                <input id="auth-display-name" type="text" placeholder="Display Name" required class="w-full p-3 rounded-lg bg-gray-800 border focus:ring-[--color-primary] focus:border-[--color-primary] hidden"/>
+                <input id="auth-email" type="email" placeholder="Email Address" required class="w-full p-3 rounded-lg bg-gray-800 border focus:ring-[--color-primary] focus:border-[--color-primary]"/>
+                <input id="auth-password" type="password" placeholder="Password" required class="w-full p-3 rounded-lg bg-gray-800 border focus:ring-[--color-primary] focus:border-[--color-primary]"/>
+                <button id="auth-submit-btn" type="submit" class="w-full bg-[--color-primary] hover:bg-[--color-primary-darker] text-white font-bold py-3 rounded-xl transition">Login</button>
             </form>
-
-            <p id="auth-toggle-link" class="mt-4 text-center text-sm cursor-pointer hover:underline text-gray-400" onclick="toggleAuthMode()">Don't have an account? Sign Up</p>
-            <p id="forgot-password-link" class="mt-2 text-center text-sm cursor-pointer hover:underline text-red-400 hidden" onclick="forgotPassword()">Forgot Password?</p>
-            <p id="auth-message" class="mt-4 text-center text-sm text-red-500 hidden"></p>
+            <p id="auth-toggle-link" class="mt-4 text-center text-sm cursor-pointer hover:underline text-gray-400">Don't have an account? Sign Up</p>
+            <p id="forgot-password-link" class="mt-2 text-center text-sm cursor-pointer hover:underline text-gray-400">Forgot Password?</p>
+            <p id="anonymous-login-link" class="mt-2 text-center text-sm cursor-pointer hover:underline text-gray-400">Continue as Guest (10 min session)</p>
+            <p id="auth-message" class="mt-4 text-center text-sm text-red-500"></p>
         </div>
     </div>
 
-    <!-- Settings Modal -->
-    <div id="settings-modal" class="modal fixed inset-0 flex items-center justify-center hidden">
-        <!-- NEW: Added animate-fade-in-scale, w-[90vw], and glass-effect -->
-        <div class="modal-content p-8 rounded-2xl w-[90vw] max-w-md app-card animate-fade-in-scale glass-effect">
-            <h2 class="text-2xl font-bold mb-6 text-primary">Settings</h2>
-            
-            <!-- Theme Selection -->
-            <div class="mb-6">
-                <label class="block text-lg font-medium mb-2">Theme</label>
-                <div class="flex space-x-4">
-                    <button onclick="setTheme('light')" class="px-4 py-2 rounded-xl border border-gray-400 hover:border-primary transition duration-150">Light</button>
-                    <button onclick="setTheme('dark')" class="px-4 py-2 rounded-xl border border-gray-400 hover:border-primary transition duration-150">Dark</button>
-                    <button onclick="setTheme('system')" class="px-4 py-2 rounded-xl border border-gray-400 hover:border-primary transition duration-150">System Default</button>
-                </div>
-            </div>
-
-            <!-- Creator Info -->
-            <div>
-                <label class="block text-lg font-medium mb-2">Creator Info</label>
-                <div class="text-sm space-y-1">
-                    <p><strong>Name:</strong> Isara Dilnuka</p>
-                    <p><strong>Email:</strong> <a href="mailto:in.fo.dilnuka@outlook.com" class="text-primary hover:underline">in.fo.dilnuka@outlook.com</a></p>
-                    <p><strong>Website:</strong> <a href="https://dilnuka13.github.io/my/" target="_blank" class="text-primary hover:underline">https://dilnuka13.github.io/my/</a></p>
-                    <!-- NEW: Updated YouTube Link -->
-                    <p><strong>YouTube:</strong> <a href="https://www.youtube.com/@dilnuka.13x" target="_blank" class="text-primary hover:underline">Isara Dilnuka (YouTube)</a></p>
-                </div>
-            </div>
-            
-            <button onclick="closeModal('settings')" class="mt-8 w-full bg-red-500 hover:bg-red-600 text-white font-bold py-3 rounded-xl transition duration-150">Close</button>
+    <!-- Forgot Password Modal -->
+    <div id="forgot-password-modal" class="modal fixed inset-0 hidden items-center justify-center z-50">
+        <div class="modal-content p-8 rounded-2xl max-w-md w-full animate-fade-in-scale glass-effect">
+            <h2 class="text-2xl font-bold mb-6 text-center text-[--color-primary]">Reset Password</h2>
+            <form id="forgot-password-form" class="space-y-4">
+                <input id="reset-email" type="email" placeholder="Enter your email address" required class="w-full p-3 rounded-lg bg-gray-800 border focus:ring-[--color-primary] focus:border-[--color-primary]"/>
+                <button type="submit" class="w-full bg-[--color-primary] hover:bg-[--color-primary-darker] text-white font-bold py-3 rounded-xl transition">Send Reset Link</button>
+            </form>
+            <p id="forgot-password-message" class="mt-4 text-center text-sm"></p>
+            <button id="back-to-login-btn" class="mt-4 w-full text-center text-sm cursor-pointer hover:underline text-gray-400">Back to Login</button>
         </div>
     </div>
 
-    <!-- --- JAVASCRIPT LOGIC --- -->
-    <script type="module">
-        // --- THIRD-PARTY IMPORTS ---
-        import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm';
+    <div id="settings-modal" class="modal fixed inset-0 hidden items-center justify-center z-50">
+        <div class="modal-content p-8 rounded-2xl max-w-md animate-fade-in-scale glass-effect">
+            <h2 class="text-2xl font-bold mb-6 text-[--color-primary]">Settings</h2>
+            <div class="mb-6"><label class="block text-lg font-medium mb-2">Theme</label><div class="flex space-x-4"><button data-theme="light" class="theme-btn px-4 py-2 rounded-xl border border-gray-400 hover:border-[--color-primary] transition">Light</button><button data-theme="dark" class="theme-btn px-4 py-2 rounded-xl border border-gray-400 hover:border-[--color-primary] transition">Dark</button><button data-theme="system" class="theme-btn px-4 py-2 rounded-xl border border-gray-400 hover:border-[--color-primary] transition">System</button></div></div>
+            <div><label class="block text-lg font-medium mb-2">Creator Info</label><div class="text-sm space-y-1"><p><strong>Name:</strong> Isara Dilnuka</p><p><strong>Email:</strong> <a href="mailto:in.fo.dilnuka@outlook.com" class="text-[--color-primary] hover:underline">in.fo.dilnuka@outlook.com</a></p><p><strong>Website:</strong> <a href="https://dilnuka13.github.io/my/" target="_blank" rel="noopener noreferrer" class="text-[--color-primary] hover:underline">dilnuka13.github.io/my/</a></p><p><strong>YouTube:</strong> <a href="https://www.youtube.com/@dilnuka.13x" target="_blank" rel="noopener noreferrer" class="text-[--color-primary] hover:underline">Isara Dilnuka (YouTube)</a></p></div></div>
+            <button id="settings-close-btn" class="mt-8 w-full bg-red-500 hover:bg-red-600 font-bold py-3 rounded-xl transition">Close</button>
+        </div>
+    </div>
 
-        // --- 
-        // --- API KEYS CONFIGURATION ---
-        // --- 
-        // 1. Google AI API Key (ඔබ ලබාදුන් Key එක)
-        const API_KEY = "AIzaSyCqoieBQcBSIQZnWjZRvbEr9jaISX1kqTQ"; 
-        
-        // 2. Supabase Keys (ඔබගේ මුල් ගොනුවෙන්)
+    <div id="confirmation-modal" class="modal fixed inset-0 hidden items-center justify-center z-50">
+        <div class="modal-content p-8 rounded-2xl max-w-sm animate-fade-in-scale glass-effect">
+            <h2 id="confirmation-title" class="text-xl font-bold mb-4">Confirm Action</h2>
+            <p id="confirmation-message" class="text-gray-300 mb-6">Are you sure?</p>
+            <div class="flex justify-end space-x-4"><button id="confirmation-cancel-btn" class="px-4 py-2 rounded-lg bg-gray-600 hover:bg-gray-500 transition">Cancel</button><button id="confirmation-confirm-btn" class="px-4 py-2 rounded-lg bg-red-600 hover:bg-red-500 transition">Confirm</button></div>
+        </div>
+    </div>
+
+    <div id="camera-modal" class="modal fixed inset-0 hidden items-center justify-center z-50">
+        <div class="modal-content p-4 rounded-2xl max-w-lg animate-fade-in-scale glass-effect">
+            <video id="camera-video" autoplay playsinline class="rounded-lg w-full"></video>
+            <button id="capture-photo-btn" class="mt-4 w-full bg-[--color-primary] hover:bg-[--color-primary-darker] font-bold py-3 rounded-xl transition">Capture Photo</button>
+        </div>
+    </div>
+
+    <!-- Load Supabase JS -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // --- CONFIGURATION ---
+        const GEMINI_API_KEY = "AIzaSyC_qXa2pFqvF7Lt56d8q4_OtH5K5WivaJI";
         const SUPABASE_URL = 'https://auarltmtiutjcfrvvfix.supabase.co';
         const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImF1YXJsdG10aXV0amNmcnZ2Zml4Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjI1MTI1OTQsImV4cCI6MjA3ODA4ODU5NH0.JXeC9rOrUF2OExkFZIz5ywQJSDP2ht17CoY5QnqoP8I';
-        // --- 
-        // --- 
         
-        const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        
-        let user = null; // Supabase user object
-        let recognition = null; // Web Speech API instance
-        let currentChatMode = 'normal'; // Default mode
-        let inMemoryChatHistory = []; // In-memory history for the current session
-
-        // --- GEMINI API SETUP ---
-        const LLM_MODEL = "gemini-2.5-flash-preview-09-2025";
         const SYSTEM_INSTRUCTION_NORMAL = "You are DeeNU.Ai, a helpful and sophisticated AI assistant powered by Google, specializing in generating responses grounded in real-time search results. Keep your answers clear, concise, and professional. Use markdown for formatting.";
         const SYSTEM_INSTRUCTION_PRO = "You are DeeNU.Ai Pro Mode (Flash), a creative and advanced AI assistant powered by Google. Respond thoughtfully and provide deep insights. Do NOT use external search tools. Use markdown for formatting.";
         const SYSTEM_INSTRUCTION_DEEP = "You are DeeNU.Ai Pro (Deep Search), a highly advanced AI assistant. Your goal is to provide deep, comprehensive, and insightful answers, using Google Search results to gather extensive information. Synthesize findings, analyze deeply, and provide expert-level explanations.";
         const SYSTEM_INSTRUCTION_CODE = "You are DeeNU.Ai Code Generator. Your response MUST ONLY contain the complete code block requested by the user, wrapped in appropriate language markdown (e.g., ```html, ```javascript). Provide NO additional conversational text, introductions, or explanations outside the code block.";
         
+        // --- SERVICE INITIALIZATION ---
+        const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        // --- STATE VARIABLES ---
+        let user = null;
+        let messages = [];
+        let currentView = 'chat';
+        let isLoading = false;
+        let currentAttachment = null;
+        let anonymousTimerInterval = null;
+
         // --- DOM ELEMENTS ---
-        const body = document.body;
-        const chatForm = document.getElementById('chat-form');
-        const userInput = document.getElementById('user-input');
-        const chatHistoryDiv = document.getElementById('chat-history');
-        const sendButton = document.getElementById('send-button');
-        const sendIcon = document.getElementById('send-icon');
-        const loadingSpinner = document.getElementById('loading-spinner');
-        const userStatus = document.getElementById('user-status');
-        const authButton = document.getElementById('auth-button');
-        const voiceToggle = document.getElementById('voice-toggle');
-        const initialMessage = document.getElementById('initial-message');
-        const modelSelector = document.getElementById('model-selector'); // New model selector
+        const dom = {
+            chatContainer: document.getElementById('chat-container'),
+            sidebar: document.getElementById('sidebar'),
+            sidebarOverlay: document.getElementById('sidebar-overlay'),
+            chatHistory: document.getElementById('chat-history'),
+            userInput: document.getElementById('user-input'),
+            sendButton: document.getElementById('send-button'),
+            chatForm: document.getElementById('chat-form'),
+            authButton: document.getElementById('auth-button'),
+            userStatus: document.getElementById('user-status'),
+            anonymousTimer: document.getElementById('anonymous-timer'),
+            viewTitle: document.getElementById('view-title'),
+            historyList: document.getElementById('history-list'),
+            modelSelector: document.getElementById('model-selector'),
+            // Views
+            viewChat: document.getElementById('view-chat'),
+            viewCoder: document.getElementById('view-coder'),
+            viewHistory: document.getElementById('view-history'),
+            // Coder Panel
+            codePrompt: document.getElementById('code-prompt'),
+            codeLanguage: document.getElementById('code-language'),
+            generateCodeBtn: document.getElementById('generate-code-btn'),
+            codeOutput: document.getElementById('code-output'),
+            copyCodeBtn: document.getElementById('copy-code-btn'),
+            // Attachments
+            attachmentBtn: document.getElementById('attachment-btn'),
+            attachmentMenu: document.getElementById('attachment-menu'),
+            uploadFileBtn: document.getElementById('upload-file-btn'),
+            useCameraBtn: document.getElementById('use-camera-btn'),
+            fileInput: document.getElementById('file-input'),
+            attachmentPreview: document.getElementById('attachment-preview'),
+            // Modals
+            welcomeModal: document.getElementById('welcome-modal'),
+            authModal: document.getElementById('auth-modal'),
+            forgotPasswordModal: document.getElementById('forgot-password-modal'),
+            settingsModal: document.getElementById('settings-modal'),
+            confirmationModal: document.getElementById('confirmation-modal'),
+            cameraModal: document.getElementById('camera-modal'),
+            // Camera
+            cameraVideo: document.getElementById('camera-video'),
+            // Icons
+            sendIcon: `<svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>`,
+            loadingSpinner: `<svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>`,
+            loginIcon: `<svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>Login / Sign Up`,
+            logoutIcon: `<svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>Logout`
+        };
 
-        // NEW: Responsive DOM Elements
-        const menuToggle = document.getElementById('menu-toggle');
-        const sidebarOverlay = document.getElementById('sidebar-overlay');
-        const sidebar = document.getElementById('sidebar');
-        const sidebarClose = document.getElementById('sidebar-close');
+        // --- UTILITY FUNCTIONS ---
+        const openModal = (modal) => modal.classList.remove('hidden');
+        const closeModal = (modal) => modal.classList.add('hidden');
+        const scrollToBottom = () => dom.chatHistory.scrollTop = dom.chatHistory.scrollHeight;
 
-        // Views
-        const viewChat = document.getElementById('view-chat');
-        const viewHistory = document.getElementById('view-history');
-        const viewCoder = document.getElementById('view-coder'); // Added Coder view
-        const views = { chat: viewChat, history: viewHistory, coder: viewCoder }; // Added Coder
+        const toggleLoading = (state) => {
+            isLoading = state;
+            dom.userInput.disabled = isLoading || !user;
+            dom.sendButton.disabled = isLoading || !user || (!dom.userInput.value.trim() && !currentAttachment);
+            dom.sendButton.innerHTML = isLoading ? dom.loadingSpinner : dom.sendIcon;
+            dom.modelSelector.disabled = isLoading || !user;
+            dom.generateCodeBtn.disabled = isLoading || !user;
+        };
         
-        // Code Panel Elements (Added Back)
-        const codePrompt = document.getElementById('code-prompt');
-        const codeLanguage = document.getElementById('code-language');
-        const codeOutput = document.getElementById('code-output');
-        const generateCodeBtn = document.getElementById('generate-code-btn');
-
-        // History List
-        const historyList = document.getElementById('history-list');
-
-        // --- THEME MANAGEMENT ---
-
-        window.setTheme = (theme) => {
-            if (theme === 'system') {
-                localStorage.removeItem('theme');
-                body.classList.remove('light-mode', 'dark-mode');
-                if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
-                    body.classList.add('dark-mode');
-                } else {
-                    body.classList.add('light-mode');
-                }
+        // --- RENDER FUNCTIONS ---
+        const renderMessages = () => {
+            dom.chatHistory.innerHTML = '';
+            if (messages.length === 0) {
+                dom.chatHistory.innerHTML = `<div class="message flex model-message items-start space-x-3"><img src="https://dilnuka13.github.io/AL/favicon.ico" alt="DeeNU Avatar" class="w-8 h-8 rounded-full flex-shrink-0 mt-1" /><div class="model-bubble"><p>ආයුබෝවන්! මම <strong>DeeNU.Ai</strong>.</p><p>Please log in, sign up, or continue as a guest to begin.</p></div></div>`;
             } else {
-                localStorage.setItem('theme', theme);
-                body.classList.remove('light-mode', 'dark-mode');
-                body.classList.add(`${theme}-mode`);
+                messages.forEach(msg => {
+                    const msgElement = createMessageElement(msg);
+                    dom.chatHistory.appendChild(msgElement);
+                });
             }
+            scrollToBottom();
         };
 
-        const applyInitialTheme = () => {
-            const storedTheme = localStorage.getItem('theme');
-            window.setTheme(storedTheme || 'system'); // Default to system
-        };
-
-        // --- UI UTILITIES (Modals, Views, Loading) ---
-        
-        // NEW: Sidebar Functions
-        function openSidebar() {
-            sidebar.classList.add('sidebar-open');
-            sidebarOverlay.classList.remove('hidden');
-        }
-
-        function closeSidebar() {
-            sidebar.classList.remove('sidebar-open');
-            sidebarOverlay.classList.add('hidden');
-        }
-
-
-        window.openModal = (id) => {
-            document.getElementById(`${id}-modal`).classList.remove('hidden');
-        };
-
-        window.closeModal = (id) => {
-            document.getElementById(`${id}-modal`).classList.add('hidden');
-        };
-
-        // New Welcome Modal Logic
-        window.continueToAuth = () => {
-            closeModal('welcome');
-            // Auth listener (onAuthStateChange) already ran.
-            // If user is null, we must prompt them to log in.
-            if (!user) {
-                handleAuthClick(); // Open the login modal
-            }
-        };
-
-        // New Chat Function
-        window.startNewChat = () => {
-            inMemoryChatHistory = []; // Clear in-memory history
-            chatHistoryDiv.innerHTML = ''; // Clear UI
-            chatHistoryDiv.appendChild(initialMessage); // Show welcome
-            initialMessage.classList.remove('hidden');
-            switchView('chat'); // Switch back to chat view
-
-            // NEW: Close sidebar on mobile after navigation
-            if (window.innerWidth < 768) {
-                closeSidebar();
-            }
-        }
-
-        window.switchView = (viewName) => {
-            Object.keys(views).forEach(key => views[key].classList.add('hidden'));
-            views[viewName].classList.remove('hidden');
-
-            if (viewName === 'history') {
-                fetchHistory();
-            }
-
-            // Highlight button in sidebar
-            document.querySelectorAll('#sidebar nav button.sidebar-nav-btn').forEach(btn => {
-                btn.classList.remove('text-primary');
-                btn.classList.add('text-white');
-                if (btn.onclick && btn.onclick.toString().includes(`switchView('${viewName}')`)) {
-                    btn.classList.add('text-primary');
-                    btn.classList.remove('text-white');
-                }
-            });
-
-            // NEW: Close sidebar on mobile after navigation
-            if (window.innerWidth < 768) {
-                closeSidebar();
-            }
-        };
-
-        function toggleLoading(isLoading) {
-            userInput.disabled = isLoading;
-            modelSelector.disabled = isLoading; // Disable dropdown
-            sendButton.disabled = isLoading || !user; 
-            sendIcon.classList.toggle('hidden', isLoading);
-            loadingSpinner.classList.toggle('hidden', !isLoading);
-
-            // Toggle Code button
-            if (generateCodeBtn) {
-                generateCodeBtn.disabled = isLoading || !user;
-            }
-        }
-
-        function scrollToBottom() {
-            chatHistoryDiv.scrollTop = chatHistoryDiv.scrollHeight;
-        }
-
-        function createMessageElement(message) {
-            const messageElement = document.createElement('div');
+        const createMessageElement = (message) => {
+            const el = document.createElement('div');
+            el.className = `message flex items-start space-x-3 message-bubble-animate ${message.role === 'user' ? 'user-message justify-end' : 'model-message justify-start'}`;
             
-            // NEW: Add animation class to all messages
-            messageElement.classList.add('message-bubble-animate');
-
-            // Add Avatar for Model
+            let avatarHTML = '';
             if (message.role === 'model') {
-                messageElement.className += ` message flex model-message items-start space-x-3`;
-                const avatar = document.createElement('img');
-                avatar.src = 'https://dilnuka13.github.io/AL/favicon.ico';
-                avatar.alt = 'DeeNU Avatar';
-                avatar.className = 'w-8 h-8 rounded-full flex-shrink-0 mt-1';
-                avatar.onerror = function() { this.src='https://placehold.co/40x40/10b981/FFF?text=D'; this.onerror=null; };
-                messageElement.appendChild(avatar);
-            } else {
-                messageElement.className += ` message flex user-message`;
+                avatarHTML = `<img src="https://dilnuka13.github.io/AL/favicon.ico" alt="DeeNU Avatar" class="w-8 h-8 rounded-full flex-shrink-0 mt-1" />`;
             }
 
             const bubble = document.createElement('div');
             bubble.className = message.role === 'user' ? 'user-bubble' : 'model-bubble';
+            if (message.status === 'thinking') bubble.classList.add('animate-pulse-opacity');
             
-            // NEW: Add pulse animation for thinking
-            if (message.status === 'thinking') {
-                bubble.classList.add('animate-pulse-opacity');
-            }
-
-            let htmlContent = message.text ? marked.parse(message.text) : (message.status === 'thinking' ? '<span class="text-gray-400 italic">DeeNU.Ai is thinking...</span>' : '');
-
-            let bubbleContent = htmlContent;
-
-            // Add TTS button for model responses
-            if (message.role === 'model' && message.text) {
-                // Base64 encoding the text to safely pass it to the onclick handler
-                const textToSpeak = message.text.replace(/<[^>]*>?/gm, ''); // Remove HTML tags for cleaner speech
-                const encodedText = btoa(unescape(encodeURIComponent(textToSpeak.replace(/'/g, "\\'").replace(/\n/g, ' ')))); 
-                
-                const ttsButton = `<button onclick="playTTS(this, '${encodedText}')" class="tts-button hover:bg-primary transition duration-150" title="Read Aloud">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 3v14a1 1 0 01-1.383.924L4.031 15H2a1 1 0 01-1-1V6a1 1 0 011-1h2.031l5.968-3.924zM16 8a2 2 0 100 4 2 2 0 000-4z" clip-rule="evenodd"></path></svg>
-                </button>`;
-                
-                bubbleContent = `<div class="flex items-start">${htmlContent}<div class="ml-3 mt-1 flex-shrink-0">${ttsButton}</div></div>`;
-            } 
-            
-            bubble.innerHTML = bubbleContent;
-
-
-            if (message.sources && message.sources.length > 0) {
-                const sourceList = message.sources.map((s, i) => 
-                    `<a href="${s.uri}" target="_blank" class="text-xs text-blue-300 hover:underline">Source ${i + 1}</a>`
-                ).join(' | ');
-                
-                const sourceDiv = document.createElement('div');
-                sourceDiv.className = "mt-2 pt-2 border-t border-gray-600 text-xs text-gray-400";
-                sourceDiv.innerHTML = `Grounded in: ${sourceList}`;
-                bubble.appendChild(sourceDiv);
-            }
-
-            messageElement.appendChild(bubble);
-            return messageElement;
-        }
-        
-        // --- TTS UTILITIES (PCM to WAV conversion) ---
-
-        // Converts Base64 data to ArrayBuffer
-        function base64ToArrayBuffer(base64) {
-            const binaryString = atob(base64);
-            const len = binaryString.length;
-            const bytes = new Uint8Array(len);
-            for (let i = 0; i < len; i++) {
-                bytes[i] = binaryString.charCodeAt(i);
-            }
-            return bytes.buffer;
-        }
-
-        // Converts signed 16-bit PCM (Int16Array) to a WAV Blob
-        function pcmToWav(pcm16, sampleRate) {
-            const numChannels = 1;
-            const bytesPerSample = 2;
-            const blockAlign = numChannels * bytesPerSample;
-            const byteRate = sampleRate * blockAlign;
-            const dataSize = pcm16.length * bytesPerSample;
-            const buffer = new ArrayBuffer(44 + dataSize);
-            const view = new DataView(buffer);
-            let offset = 0;
-
-            /* RIFF identifier */
-            writeString(view, offset, 'RIFF'); offset += 4;
-            /* file length */
-            view.setUint32(offset, 36 + dataSize, true); offset += 4;
-            /* RIFF type */
-            writeString(view, offset, 'WAVE'); offset += 4;
-            /* format chunk identifier */
-            writeString(view, offset, 'fmt '); offset += 4;
-            /* format chunk length */
-            view.setUint32(offset, 16, true); offset += 4;
-            /* sample format (1: PCM) */
-            view.setUint16(offset, 1, true); offset += 2;
-            /* number of channels */
-            view.setUint16(offset, numChannels, true); offset += 2;
-            /* sample rate */
-            view.setUint32(offset, sampleRate, true); offset += 4;
-            /* byte rate (sampleRate * blockAlign) */
-            view.setUint32(offset, byteRate, true); offset += 4;
-            /* block align (numChannels * bytesPerSample) */
-            view.setUint16(offset, blockAlign, true); offset += 2;
-            /* bits per sample */
-            view.setUint16(offset, 16, true); offset += 2;
-            /* data chunk identifier */
-            writeString(view, offset, 'data'); offset += 4;
-            /* data chunk length */
-            view.setUint32(offset, dataSize, true); offset += 4;
-
-            // Write PCM data
-            for (let i = 0; i < pcm16.length; i++, offset += bytesPerSample) {
-                view.setInt16(offset, pcm16[i], true);
-            }
-
-            return new Blob([view], { type: 'audio/wav' });
-        }
-
-        function writeString(view, offset, string) {
-            for (let i = 0; i < string.length; i++) {
-                view.setUint8(offset + i, string.charCodeAt(i));
-            }
-        }
-
-        window.playTTS = async (button, base64Text) => {
-            const text = decodeURIComponent(escape(atob(base64Text)));
-            const initialIcon = button.innerHTML;
-            
-            button.disabled = true;
-            button.innerHTML = '<svg class="w-4 h-4 animate-spin" fill="currentColor" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>';
-
-            const payload = {
-                contents: [{ parts: [{ text: text }] }],
-                generationConfig: {
-                    responseModalities: ["AUDIO"],
-                    speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } } }
-                },
-                model: "gemini-2.5-flash-preview-tts"
-            };
-
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-tts:generateContent?key=${API_KEY}`;
-
-            try {
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!response.ok) throw new Error("TTS API call failed.");
-
-                const result = await response.json();
-                const part = result?.candidates?.[0]?.content?.parts?.[0];
-                const audioData = part?.inlineData?.data;
-                const mimeType = part?.inlineData?.mimeType;
-
-                if (audioData && mimeType && mimeType.startsWith("audio/L16")) {
-                    const rateMatch = mimeType.match(/rate=(\d+)/);
-                    const sampleRate = rateMatch ? parseInt(rateMatch[1], 10) : 24000;
-                    
-                    const pcmDataBuffer = base64ToArrayBuffer(audioData);
-                    const pcm16 = new Int16Array(pcmDataBuffer);
-                    
-                    const wavBlob = pcmToWav(pcm16, sampleRate);
-                    const audioUrl = URL.createObjectURL(wavBlob);
-
-                    const audio = new Audio(audioUrl);
-                    audio.play();
-                    audio.onended = () => {
-                        button.disabled = false;
-                        button.innerHTML = initialIcon;
-                        URL.revokeObjectURL(audioUrl);
-                    };
-                    
-                } else {
-                    throw new Error("Invalid audio response structure or data.");
+            let attachmentHTML = '';
+            if (message.attachment) {
+                if (message.attachment.type === 'image') {
+                    attachmentHTML = `<img src="${message.attachment.data}" alt="attachment" class="max-w-xs rounded-lg mb-2" />`;
+                } else if (message.attachment.type === 'text') {
+                    attachmentHTML = `<div class="mb-2 p-2 bg-gray-700/50 rounded-lg text-xs italic"><p>Attachment: ${message.attachment.fileName}</p></div>`;
                 }
-
-            } catch (error) {
-                console.error("TTS Error:", error);
-                 button.innerHTML = '<svg class="w-4 h-4 text-red-500" fill="currentColor" viewBox="0 0 20 20" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 1.414L8.586 10l-1.293 1.293a1 1 0 101.414 1.414L10 11.414l1.293 1.293a1 1 0 001.414-1.414L11.414 10l1.293-1.293a1 1 0 00-1.414-1.414L10 8.586 8.707 7.293z" clip-rule="evenodd"></path></svg>';
-                setTimeout(() => {
-                    button.disabled = false;
-                    button.innerHTML = initialIcon;
-                }, 3000);
             }
-        };
-
-        // --- AUTHENTICATION LOGIC (SUPABASE) ---
-
-        let authMode = 'login'; // 'login' or 'signup'
-
-        const authTitle = document.getElementById('auth-title');
-        const authToggleLink = document.getElementById('auth-toggle-link');
-        const forgotPasswordLink = document.getElementById('forgot-password-link');
-        const authSubmitBtn = document.getElementById('auth-submit-btn');
-        const authMessage = document.getElementById('auth-message');
-
-        const nameGroup = document.getElementById('name-group');
-        const dobGroup = document.getElementById('dob-group');
-        const countryGroup = document.getElementById('country-group');
-        const displayNameGroup = document.getElementById('display-name-group');
-        const passwordGroup = document.getElementById('password-group');
-        const authPassword = document.getElementById('auth-password');
-
-        window.toggleAuthMode = () => {
-            authMode = authMode === 'login' ? 'signup' : 'login';
-            authTitle.textContent = authMode === 'login' ? 'Login' : 'Create Account';
-            authToggleLink.textContent = authMode === 'login' ? "Don't have an account? Sign Up" : "Already have an account? Login";
-            authSubmitBtn.textContent = authMode === 'login' ? 'Login' : 'Sign Up';
-
-            // Show/Hide fields for Sign Up
-            nameGroup.classList.toggle('hidden', authMode === 'login');
-            dobGroup.classList.toggle('hidden', authMode === 'login');
-            countryGroup.classList.toggle('hidden', authMode === 'login');
-            displayNameGroup.classList.toggle('hidden', authMode === 'login');
-            forgotPasswordLink.classList.toggle('hidden', authMode === 'signup');
             
-            authPassword.type = 'password';
-            passwordGroup.classList.remove('hidden');
-            authMessage.classList.add('hidden');
-        };
-        
-        window.handleAuthClick = () => {
-             if (user) {
-                 logout();
-             } else {
-                 authMode = 'login'; // Reset to login
-                 toggleAuthMode(); // Call to set fields correctly
-                 toggleAuthMode(); // Call again to reset to login
-                 openModal('auth');
-             }
+            const contentHTML = message.text ? marked.parse(message.text) : (message.status === 'thinking' ? '<span class="text-gray-400 italic">DeeNU.Ai is thinking...</span>' : '');
+            
+            let ttsHTML = '';
+            if (message.role === 'model' && message.text) {
+                const cleanText = message.text.replace(/<[^>]*>?/gm, '');
+                ttsHTML = `<div class="ml-3 mt-1 flex-shrink-0"><button data-tts-text="${btoa(unescape(encodeURIComponent(cleanText)))}" class="tts-button hover:bg-primary transition duration-150" title="Read Aloud"><svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 3v14a1 1 0 01-1.383.924L4.031 15H2a1 1 0 01-1-1V6a1 1 0 011-1h2.031l5.968-3.924zM16 8a2 2 0 100 4 2 2 0 000-4z" clip-rule="evenodd"></path></svg></button></div>`;
+            }
+
+            let sourcesHTML = '';
+            if (message.sources?.length > 0) {
+                const sourceLinks = message.sources.map((s, i) => `<a href="${s.uri}" target="_blank" rel="noopener noreferrer" class="text-xs text-blue-400 dark:text-blue-300 hover:underline ml-2">Source ${i + 1}</a>`).join('');
+                sourcesHTML = `<div class="mt-2 pt-2 border-t border-gray-600 dark:border-gray-700 text-xs text-gray-400 dark:text-gray-400">Grounded in: ${sourceLinks}</div>`;
+            }
+
+            bubble.innerHTML = `${attachmentHTML}<div class="flex items-start"><div>${contentHTML}</div>${ttsHTML}</div>${sourcesHTML}`;
+            el.innerHTML = avatarHTML;
+            el.appendChild(bubble);
+            return el;
         };
 
-        const updateAuthUI = (currentUser) => {
+        const updateUIForUser = (currentUser) => {
             user = currentUser;
             if (user) {
-                const userDisplayName = user.user_metadata?.display_name || user.email;
-                userStatus.textContent = `Signed in as: ${userDisplayName}`;
-                authButton.innerHTML = `<svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path></svg>Logout`;
-                authButton.classList.remove('text-red-400');
-                sendButton.disabled = false;
-                userInput.disabled = false;
-                userInput.placeholder = "Type your message here...";
-                modelSelector.disabled = false;
-                closeModal('auth');
-                // Fetch history after successful login
-                fetchHistory(); // This will load history into the history tab
-                startNewChat(); // Start with a fresh chat screen
-            } else {
-                userStatus.textContent = 'Not Signed In';
-                authButton.innerHTML = `<svg class="w-5 h-5 mr-3" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1"></path></svg>Login / Sign Up`;
-                authButton.classList.add('text-red-400');
-                sendButton.disabled = true;
-                userInput.disabled = true;
-                userInput.placeholder = "Please log in to start chatting.";
-                modelSelector.disabled = true;
-                chatHistoryDiv.innerHTML = ''; // Clear chat history on logout
-                chatHistoryDiv.appendChild(initialMessage);
-                historyList.innerHTML = '<li class="text-gray-400 italic">History will load here once you sign in and start chatting.</li>';
-                inMemoryChatHistory = []; // Clear in-memory history on logout
-
-                // If user logs out, show welcome modal again, which will force login
-                openModal('welcome');
-            }
-        };
-
-        const handleAuthSubmit = async (e) => {
-            e.preventDefault();
-            authMessage.classList.add('hidden');
-            
-            const email = document.getElementById('auth-email').value;
-            const password = document.getElementById('auth-password').value;
-
-            try {
-                if (authMode === 'login') {
-                    const { data: { user: currentUser }, error } = await supabase.auth.signInWithPassword({ email, password });
-                    if (error) throw error;
-                    updateAuthUI(currentUser);
-
-                } else if (authMode === 'signup') {
-                    const fullName = document.getElementById('auth-name').value;
-                    const dob = document.getElementById('auth-dob').value;
-                    const country = document.getElementById('auth-country').value;
-                    const displayName = document.getElementById('auth-display-name').value;
-                    
-                    const { data: { user: currentUser }, error } = await supabase.auth.signUp({
-                        email, 
-                        password,
-                        options: {
-                            data: { full_name: fullName, dob, country, display_name: displayName }
-                        }
-                    });
-                    if (error) throw error;
-                    
-                    if (currentUser && !currentUser.email_confirmed_at) {
-                        authMessage.textContent = 'Please check your email to confirm your account!';
-                        authMessage.classList.remove('hidden');
-                    } else if (currentUser) {
-                        updateAuthUI(currentUser);
-                    }
+                dom.userStatus.textContent = `Signed in as: ${user.is_anonymous ? 'Guest' : (user.user_metadata?.display_name || user.email)}`;
+                dom.authButton.innerHTML = dom.logoutIcon;
+                dom.userInput.placeholder = "Type your message here...";
+                dom.userInput.disabled = false;
+                dom.sendButton.disabled = false;
+                dom.modelSelector.disabled = false;
+                dom.generateCodeBtn.disabled = false;
+                dom.attachmentBtn.disabled = false;
+                closeModal(dom.welcomeModal);
+                closeModal(dom.authModal);
+                closeModal(dom.forgotPasswordModal);
+                
+                if (user.is_anonymous) {
+                    const expiry = new Date(user.created_at).getTime() + 10 * 60 * 1000;
+                    startAnonymousTimer(expiry);
+                } else {
+                    stopAnonymousTimer();
                 }
-            } catch (error) {
-                authMessage.textContent = error.message;
-                authMessage.classList.remove('hidden');
-                console.error('Auth Error:', error);
+                
+                fetchHistory();
+                startNewChat();
+            } else {
+                dom.userStatus.textContent = 'Not Signed In';
+                dom.authButton.innerHTML = dom.loginIcon;
+                dom.userInput.placeholder = "Please log in to start chatting.";
+                dom.userInput.disabled = true;
+                dom.sendButton.disabled = true;
+                dom.modelSelector.disabled = true;
+                dom.generateCodeBtn.disabled = true;
+                dom.attachmentBtn.disabled = true;
+                messages = [];
+                dom.historyList.innerHTML = '';
+                stopAnonymousTimer();
+                openModal(dom.welcomeModal);
             }
         };
-        document.getElementById('auth-form').addEventListener('submit', handleAuthSubmit);
 
-        window.forgotPassword = async () => {
-            const email = document.getElementById('auth-email').value;
-            if (!email) {
-                authMessage.textContent = 'Please enter your email address above.';
-                authMessage.classList.remove('hidden');
-                return;
-            }
-
-            try {
-                const { error } = await supabase.auth.resetPasswordForEmail(email, {
-                    redirectTo: window.location.href // Redirect back here
+        // --- AUTHENTICATION ---
+        const handleLogout = () => {
+            document.getElementById('confirmation-title').textContent = "Confirm Logout";
+            document.getElementById('confirmation-message').textContent = "Are you sure you want to log out?";
+            openModal(dom.confirmationModal);
+            document.getElementById('confirmation-confirm-btn').onclick = async () => {
+                await supabase.auth.signOut();
+                closeModal(dom.confirmationModal);
+            };
+        };
+        
+        // --- HISTORY ---
+        const fetchHistory = async () => {
+             if (!user) return;
+            const { data, error } = await supabase.from('messages').select('id, text, role, mode, created_at').eq('user_id', user.id).order('created_at', { ascending: false }).limit(100);
+            if (error) {
+                dom.historyList.innerHTML = `<li class="text-red-500">Error loading history.</li>`;
+            } else if (data) {
+                dom.historyList.innerHTML = '';
+                if(data.length === 0) dom.historyList.innerHTML = `<li class="text-gray-400 italic">No history found.</li>`;
+                data.filter(h => h.role === 'user').forEach(item => {
+                    const li = document.createElement('li');
+                    li.innerHTML = `<button data-history-id="${item.id}" class="w-full text-left p-3 rounded-lg bg-gray-800 hover:ring-2 hover:ring-[--color-primary] cursor-pointer transition"><span class="text-xs text-gray-400">[${new Date(item.created_at).toLocaleString()}] (${item.mode || 'chat'})</span><p class="truncate mt-1">${item.text}</p></button>`;
+                    dom.historyList.appendChild(li);
                 });
-
-                if (error) throw error;
-
-                authMessage.textContent = 'Password reset link sent to your email!';
-                authMessage.classList.remove('hidden');
-                passwordGroup.classList.add('hidden'); // Hide password input
-                authSubmitBtn.textContent = 'Email Sent';
-                authSubmitBtn.disabled = true;
-
-            } catch (error) {
-                authMessage.textContent = error.message;
-                authMessage.classList.remove('hidden');
             }
         };
         
-        const logout = async () => {
-            await supabase.auth.signOut();
-            updateAuthUI(null);
-        };
-
-        // --- SUPABASE DATABASE HISTORY LOGIC ---
-
-        const saveMessage = async (role, text, sources = []) => {
-            if (!user) return console.error("User not authenticated for saving message.");
-            
-            // Get mode from the dropdown
-            const modeToSave = modelSelector.value || 'normal';
-
-            const { error } = await supabase
-                .from('messages')
-                .insert([{
-                    user_id: user.id,
-                    role,
-                    text,
-                    mode: modeToSave, // Save the mode used for this message
-                    sources: JSON.stringify(sources), 
-                    created_at: new Date().toISOString()
-                }]);
-
-            if (error) console.error("Error saving message:", error);
-        };
-
-        const fetchHistory = async () => {
+        const loadChatFromHistory = async (historyItemId) => {
             if (!user) return;
+            const { data, error } = await supabase.from('messages').select('*').eq('user_id', user.id).order('created_at', { ascending: true });
+            if (error || !data) return;
+            
+            const messageIndex = data.findIndex(m => m.id === historyItemId);
+            if (messageIndex === -1) return;
 
-            const { data: messages, error } = await supabase
-                .from('messages')
-                .select('text, role, mode, created_at, sources')
-                .eq('user_id', user.id)
-                .order('created_at', { ascending: true })
-                .limit(100);
-
-            if (error) {
-                console.error("Error fetching history:", error);
-                // Only update history list, not the main chat
-                historyList.innerHTML = '<li class="text-red-500">Error loading history.</li>';
-                return;
+            let endSliceIndex = messageIndex;
+            if(data[messageIndex + 1] && data[messageIndex + 1].role === 'model') {
+                endSliceIndex = messageIndex + 1;
             }
             
-            // Render History View
-            historyList.innerHTML = '';
-            if (messages.length === 0) {
-                 historyList.innerHTML = '<li class="text-gray-400 italic">No history found.</li>';
-                 return;
-            }
-            // Show newest first in history tab
-            messages.reverse().filter(m => m.role === 'user').forEach(msg => {
-                const date = new Date(msg.created_at).toLocaleString();
-                const listItem = document.createElement('li');
-                listItem.className = 'p-3 rounded-lg app-card hover:ring-2 hover:ring-primary cursor-pointer transition duration-150';
-                listItem.innerHTML = `<span class="text-xs text-gray-400">[${date}] (${msg.mode || 'chat'})</span><br>${msg.text.substring(0, 80)}...`;
-                historyList.appendChild(listItem);
-            });
+            messages = data.slice(0, endSliceIndex + 1).map(m => ({
+                ...m,
+                sources: typeof m.sources === 'string' ? JSON.parse(m.sources) : (m.sources || []),
+            }));
+            
+            renderMessages();
+            switchView('chat');
         };
 
-        // --- CHAT MODE LOGIC ---
-        // (This is now handled by the modelSelector dropdown, no separate function needed)
-
-        // --- VOICE TYPING (WEB SPEECH API) ---
-
-        if ('webkitSpeechRecognition' in window) {
-            recognition = new webkitSpeechRecognition();
-            recognition.continuous = false;
-            recognition.interimResults = false;
-            recognition.lang = 'si-LK'; // Sinhala
-            voiceToggle.disabled = false;
-            
-            let isRecognizing = false;
-
-            recognition.onstart = () => {
-                isRecognizing = true;
-                voiceToggle.classList.add('ring-4', 'ring-red-500'); 
-                userInput.placeholder = "Listening...";
-            };
-
-            recognition.onresult = (event) => {
-                const transcript = event.results[0][0].transcript;
-                userInput.value = transcript;
-                isRecognizing = false;
-            };
-
-            recognition.onerror = (event) => {
-                isRecognizing = false;
-                console.error('Speech recognition error:', event.error);
-                userInput.placeholder = "Error. Try again or type manually.";
-                voiceToggle.classList.remove('ring-4', 'ring-red-500');
-            };
-
-            recognition.onend = () => {
-                 isRecognizing = false;
-                 voiceToggle.classList.remove('ring-4', 'ring-red-500');
-                 if (user) {
-                    userInput.placeholder = "Type your message here...";
-                 } else {
-                    userInput.placeholder = "Please log in to start chatting.";
-                 }
-            };
-            
-            voiceToggle.addEventListener('click', () => {
-                if (isRecognizing) {
-                    recognition.stop();
-                } else {
-                    if(user) { // Only allow voice if logged in
-                        recognition.start();
-                    }
-                }
-            });
-        } else {
-            console.warn('Web Speech API not supported in this browser.');
-            voiceToggle.title = 'Voice typing not supported';
-        }
-
-
-        // --- GEMINI API CALL LOGIC (Google Search Only) ---
-        // Updated to handle different modes
-        async function callGeminiApi(history, latestPrompt, mode) {
-            const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/${LLM_MODEL}:generateContent?key=${API_KEY}`;
-            
-            // Build Chat History
+        // --- API CALLS ---
+        const callGeminiApi = async (history, prompt, mode, attachment) => {
             const contents = history.map(msg => ({
                 role: msg.role === 'user' ? 'user' : 'model',
                 parts: [{ text: msg.text }]
             }));
             
-            // Add latest prompt
-            contents.push({ role: 'user', parts: [{ text: latestPrompt }] });
+            const userParts = [];
+            let promptText = prompt;
 
-            // Set Mode/Tools/System Instruction (Dynamic)
+            if (attachment) {
+                if (attachment.type === 'image') {
+                    const base64Data = attachment.data.split(',')[1];
+                    userParts.push({ inlineData: { mimeType: attachment.mimeType, data: base64Data } });
+                } else if (attachment.type === 'text') {
+                    promptText = `Based on the document "${attachment.fileName}", answer the following: ${prompt}\n\nDOCUMENT CONTENT:\n${attachment.data}`;
+                }
+            }
+            userParts.push({ text: promptText });
+            contents.push({ role: 'user', parts: userParts });
+
+            let systemInstruction = SYSTEM_INSTRUCTION_PRO;
             let tools = undefined;
-            let systemInstructionText = SYSTEM_INSTRUCTION_PRO; // Default to Pro/Flash
-            
-            if (mode === 'normal') { // Google
-                tools = [{ "google_search": {} }];
-                systemInstructionText = SYSTEM_INSTRUCTION_NORMAL;
-            } else if (mode === 'deep') { // Deenu Pro (Deep Search)
-                tools = [{ "google_search": {} }]; // Also uses search
-                systemInstructionText = SYSTEM_INSTRUCTION_DEEP;
-            } else if (mode === 'code') {
-                 systemInstructionText = SYSTEM_INSTRUCTION_CODE;
+            if (mode === 'normal' || mode === 'deep') {
+                tools = [{ googleSearch: {} }];
+                systemInstruction = mode === 'normal' ? SYSTEM_INSTRUCTION_NORMAL : SYSTEM_INSTRUCTION_DEEP;
             }
-            // 'pro' (Flash) will just use the default SYSTEM_INSTRUCTION_PRO (no tools)
 
-            const payload = {
-                contents: contents,
-                tools: tools,
-                systemInstruction: { parts: [{ text: systemInstructionText }] }
-            };
-            
-            let response;
             try {
-                // Exponential Backoff
-                const maxRetries = 3; let delay = 1000;
-                for (let i = 0; i < maxRetries; i++) {
-                    response = await fetch(apiUrl, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    if (response.ok) break;
-                    if (i < maxRetries - 1) { await new Promise(resolve => setTimeout(resolve, delay)); delay *= 2; } else { throw new Error(`API request failed after ${maxRetries} attempts.`); }
-                }
-
-                if (!response.ok) { throw new Error(`HTTP error! status: ${response.status}`); }
-
-                const result = await response.json();
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: contents,
+                        systemInstruction: { parts: [{ text: systemInstruction }] },
+                        tools: tools
+                    })
+                });
                 
-                if (!result.candidates || result.candidates.length === 0) {
-                     const blockReason = result.promptFeedback?.blockReason || "No response candidate found";
-                     console.error("Response blocked or empty:", result.promptFeedback);
-                     return { text: `Sorry, I couldn't generate a response. Reason: ${blockReason}`, sources: [] };
-                }
-
-                const text = result.candidates[0]?.content?.parts[0]?.text || "Sorry, I couldn't generate a response.";
-                
+                const data = await response.json();
+                const text = data.candidates[0].content.parts[0].text;
                 let sources = [];
-                const groundingMetadata = result.candidates[0]?.groundingMetadata;
-                if (groundingMetadata && groundingMetadata.groundingAttributions) {
-                    sources = groundingMetadata.groundingAttributions.map(attr => ({
-                        uri: attr.web?.uri,
-                        title: attr.web?.title,
-                    })).filter(source => source.uri);
+                if (data.candidates?.[0]?.groundingMetadata?.groundingChunks) {
+                    sources = data.candidates[0].groundingMetadata.groundingChunks
+                        .map(chunk => chunk.web ? { uri: chunk.web.uri, title: chunk.web.title } : null)
+                        .filter(s => s?.uri);
                 }
-                
                 return { text, sources };
-
-            } catch (error) {
-                console.error("Gemini API call failed:", error);
-                return { text: `An error occurred: ${error.message}. Please check the console.`, sources: [] };
+            } catch(e) {
+                console.error("Gemini API Error: ", e);
+                return { text: `Sorry, an error occurred: ${e.message}`, sources: [] };
             }
-        }
+        };
 
-        // --- MAIN FORM SUBMISSION ---
-
-        chatForm.addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const prompt = userInput.value.trim();
-            // Get current mode from dropdown
-            currentChatMode = modelSelector.value; 
-            if (!prompt || !user) return; // Must be logged in
-
-            toggleLoading(true);
-            userInput.value = '';
-
-            // 1. Get current in-memory chat history for context
-            const historyData = [...inMemoryChatHistory]; // Use in-memory history
-            
-            // 2. Save user message to DB
-            await saveMessage('user', prompt);
-            
-            // 3. Add user message to UI and in-memory history
-            const userMessage = { role: 'user', text: prompt };
-            inMemoryChatHistory.push(userMessage);
-            chatHistoryDiv.appendChild(createMessageElement(userMessage));
-            
-            // Hide initial message if it's visible
-            if(initialMessage) initialMessage.classList.add('hidden');
-            
-            const tempMessage = chatHistoryDiv.appendChild(createMessageElement({ role: 'model', status: 'thinking' }));
-            scrollToBottom();
-
-            // 3. Call Gemini API
-            const { text: modelResponseText, sources } = await callGeminiApi(historyData, prompt, currentChatMode);
-
-            // 4. Remove temp message and save model response to DB
-            tempMessage.remove();
-            await saveMessage('model', modelResponseText, sources);
-
-            // 5. Add model response to UI and in-memory history
-            const modelMessage = { role: 'model', text: modelResponseText, sources: sources };
-            inMemoryChatHistory.push(modelMessage);
-            chatHistoryDiv.appendChild(createMessageElement(modelMessage));
-            
-            scrollToBottom();
-            
-            toggleLoading(false);
-            userInput.focus();
-        });
+        const callCodeApi = async (prompt, language) => {
+             const fullPrompt = `Generate a complete, single-file code implementation for the following request in ${language}: ${prompt}`;
+             try {
+                const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        contents: [{ role: 'user', parts: [{ text: fullPrompt }] }],
+                        systemInstruction: { parts: [{ text: SYSTEM_INSTRUCTION_CODE }] }
+                    })
+                });
+                
+                const data = await response.json();
+                let cleanCode = data.candidates[0].content.parts[0].text.trim();
+                if (cleanCode.startsWith("```")) { cleanCode = cleanCode.substring(cleanCode.indexOf('\n') + 1); }
+                if (cleanCode.endsWith("```")) { cleanCode = cleanCode.substring(0, cleanCode.lastIndexOf("```")); }
+                return cleanCode.trim();
+             } catch(e) {
+                return `Error generating code: ${e.message}`;
+             }
+        };
         
-        // --- CODE GENERATION SUBMISSION (Added Back) ---
-
-        generateCodeBtn.addEventListener('click', async () => {
-            const prompt = codePrompt.value.trim();
-            const language = codeLanguage.value;
-            if (!prompt || !user) return;
-
+        const callTtsApi = async (text) => {
+             try {
+                 const response = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${GEMINI_API_KEY}`, {
+                     method: 'POST',
+                     headers: {
+                         'Content-Type': 'application/json',
+                     },
+                     body: JSON.stringify({
+                         contents: [{ parts: [{ text }] }],
+                         generationConfig: {
+                             responseModalities: ["AUDIO"],
+                             speechConfig: { voiceConfig: { prebuiltVoiceConfig: { voiceName: "Kore" } } }
+                         }
+                     })
+                 });
+                 
+                 const data = await response.json();
+                 return data.candidates?.[0]?.content?.parts?.[0]?.inlineData?.data;
+             } catch (e) {
+                 console.error("TTS Error:", e);
+                 return null;
+             }
+        };
+        
+        // --- CORE LOGIC ---
+        const handleSendMessage = async () => {
+            const prompt = dom.userInput.value.trim();
+            const mode = dom.modelSelector.value;
+            if (!prompt && !currentAttachment || !user) return;
+            
             toggleLoading(true);
-            codeOutput.value = "Generating code, please wait...";
+            dom.userInput.value = '';
 
-            const fullPrompt = `Generate a complete, single-file code implementation for the following request in ${language}: ${prompt}`;
+            const userMessage = { role: 'user', text: prompt, id: self.crypto.randomUUID(), attachment: currentAttachment };
+            messages.push(userMessage);
+            const thinkingMessage = { role: 'model', text: '', status: 'thinking', id: self.crypto.randomUUID() };
+            messages.push(thinkingMessage);
+            renderMessages();
             
-            // Call API with empty history and 'code' mode
-            const { text: modelResponseText } = await callGeminiApi([], fullPrompt, 'code');
+            await supabase.from('messages').insert([{ user_id: user.id, role: 'user', text: prompt, mode, id: userMessage.id }]);
             
-            let cleanCode = modelResponseText.trim();
-            if (cleanCode.startsWith("```")) {
-                cleanCode = cleanCode.substring(cleanCode.indexOf('\n') + 1);
-            }
-            if (cleanCode.endsWith("```")) {
-                cleanCode = cleanCode.substring(0, cleanCode.lastIndexOf("```"));
-            }
+            const { text, sources } = await callGeminiApi(messages.slice(0, -2), prompt, mode, currentAttachment);
             
-            codeOutput.value = cleanCode.trim();
+            const modelMessage = { role: 'model', text, sources, id: thinkingMessage.id };
+            messages[messages.length - 1] = modelMessage;
+            renderMessages();
+            
+            await supabase.from('messages').insert([{ user_id: user.id, role: 'model', text, sources: JSON.stringify(sources), mode, id: modelMessage.id }]);
 
+            currentAttachment = null;
+            dom.attachmentPreview.classList.add('hidden');
             toggleLoading(false);
+        };
+        
+        const startNewChat = () => { messages = []; currentAttachment = null; dom.attachmentPreview.classList.add('hidden'); renderMessages(); if (window.innerWidth < 768) dom.sidebar.classList.remove('sidebar-open'); };
+
+        const switchView = (view) => {
+            currentView = view;
+            ['chat', 'coder', 'history'].forEach(v => dom[`view${v.charAt(0).toUpperCase() + v.slice(1)}`].classList.add('hidden'));
+            dom[`view${view.charAt(0).toUpperCase() + view.slice(1)}`].classList.remove('hidden');
+            dom.viewTitle.textContent = view;
             
-            // Save to DB for history tab
-            await saveMessage('user', `CODE REQUEST: ${language} - ${prompt}`);
-            await saveMessage('model', `CODE OUTPUT GENERATED (See Code Panel).`);
-        });
+            document.querySelectorAll('.sidebar-nav-btn').forEach(btn => {
+                btn.classList.toggle('text-[--color-primary]', btn.dataset.view === view);
+            });
+            
+            if (view === 'history') fetchHistory();
+            if (window.innerWidth < 768) {
+                dom.sidebar.classList.remove('sidebar-open');
+                dom.sidebarOverlay.classList.add('hidden');
+            }
+        };
 
-
-        // --- INITIALIZATION ---
-
-        function initializeApp() {
-            // 1. Auth State listener (runs immediately)
-            supabase.auth.onAuthStateChange((event, session) => {
-                if (session?.user) {
-                    updateAuthUI(session.user);
-                    // If user is logged in, hide welcome modal (in case it's still open)
-                    closeModal('welcome');
+        const setTheme = (theme) => {
+            localStorage.setItem('theme', theme);
+            document.body.classList.remove('light-mode', 'dark-mode');
+            if (theme === 'system') {
+                document.body.classList.add(window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark-mode' : 'light-mode');
+            } else {
+                document.body.classList.add(`${theme}-mode`);
+            }
+        };
+        
+        const startAnonymousTimer = (expiryTime) => {
+            stopAnonymousTimer();
+            dom.anonymousTimer.classList.remove('hidden');
+            anonymousTimerInterval = setInterval(() => {
+                const now = Date.now();
+                const timeLeft = Math.round((expiryTime - now) / 1000);
+                if (timeLeft <= 0) {
+                    stopAnonymousTimer();
+                    alert("Your anonymous session has expired. Please sign up to continue.");
+                    supabase.auth.signOut();
                 } else {
-                    updateAuthUI(null);
-                    // If user is not logged in, ensure welcome modal is visible
-                    openModal('welcome');
+                    dom.anonymousTimer.textContent = `Session ends in: ${Math.floor(timeLeft / 60)}:${String(timeLeft % 60).padStart(2, '0')}`;
                 }
-            });
+            }, 1000);
+        };
+        const stopAnonymousTimer = () => { clearInterval(anonymousTimerInterval); dom.anonymousTimer.classList.add('hidden'); };
         
-            // 2. Apply Theme
-            applyInitialTheme();
-
-            // 3. Setup Marked.js
-            marked.use({
-                renderer: {
-                    html(html) {
-                        return html.replace(/<script\b[^>]*>([\s\S]*?)<\/script>/gim, "");
-                    }
-                }
-            });
-
-            // 4. Set initial view to chat
-            switchView('chat'); 
-            // 5. Set initial mode in dropdown
-            modelSelector.value = currentChatMode;
+        // --- INITIALIZATION ---
+        const initializeApp = () => {
+            // Auth Listener
+            supabase.auth.onAuthStateChange((_event, session) => updateUIForUser(session?.user ?? null));
             
-            // NEW: Add event listeners for sidebar
-            menuToggle.addEventListener('click', openSidebar);
-            sidebarOverlay.addEventListener('click', closeSidebar);
-            sidebarClose.addEventListener('click', closeSidebar);
+            // Theme
+            setTheme(localStorage.getItem('theme') || 'system');
+            
+            // Event Listeners
+            dom.chatForm.addEventListener('submit', (e) => { e.preventDefault(); handleSendMessage(); });
+            dom.authButton.addEventListener('click', () => user ? handleLogout() : openModal(dom.authModal));
+            
+            // Modals
+            document.getElementById('get-started-btn').addEventListener('click', () => { closeModal(dom.welcomeModal); if (!user) openModal(dom.authModal); });
+            document.getElementById('settings-btn').addEventListener('click', () => openModal(dom.settingsModal));
+            document.getElementById('settings-close-btn').addEventListener('click', () => closeModal(dom.settingsModal));
+            dom.confirmationModal.querySelector('#confirmation-cancel-btn').addEventListener('click', () => closeModal(dom.confirmationModal));
+            dom.cameraModal.addEventListener('click', (e) => { if(e.target === dom.cameraModal) closeModal(dom.cameraModal); });
 
-            console.log("DeeNU.Ai (Final Animated) Initialized.");
+            // Auth Modal Logic
+            const authForm = document.getElementById('email-auth-form');
+            const authTitle = document.getElementById('auth-title');
+            const authToggle = document.getElementById('auth-toggle-link');
+            const authSubmit = document.getElementById('auth-submit-btn');
+            const authName = document.getElementById('auth-display-name');
+            const authMsg = document.getElementById('auth-message');
+            let authMode = 'login';
+            
+            authToggle.addEventListener('click', () => {
+                authMode = authMode === 'login' ? 'signup' : 'login';
+                authTitle.textContent = authMode === 'login' ? 'Welcome Back' : 'Create an Account';
+                authToggle.textContent = authMode === 'login' ? "Don't have an account? Sign Up" : "Already have an account? Login";
+                authSubmit.textContent = authMode === 'login' ? 'Login' : 'Sign Up';
+                authName.classList.toggle('hidden', authMode === 'login');
+                authMsg.textContent = '';
+            });
+            
+            authForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+                authMsg.textContent = '';
+                const email = document.getElementById('auth-email').value;
+                const password = document.getElementById('auth-password').value;
+                const displayName = authName.value;
+                try {
+                    if (authMode === 'login') {
+                        const { error } = await supabase.auth.signInWithPassword({ email, password });
+                        if (error) throw error;
+                    } else {
+                        const { data, error } = await supabase.auth.signUp({ email, password, options: { data: { display_name: displayName } } });
+                        if (error) throw error;
+                        if (data.user && !data.user.email_confirmed_at) authMsg.textContent = 'Please check your email to confirm your account!';
+                    }
+                } catch (err) { authMsg.textContent = err.message; }
+            });
 
-            // Welcome modal is shown by default via HTML, auth listener will handle hiding it if needed
-        }
-        
+            // Forgot Password Logic
+            document.getElementById('forgot-password-link').addEventListener('click', () => {
+                closeModal(dom.authModal);
+                openModal(dom.forgotPasswordModal);
+            });
+
+            document.getElementById('back-to-login-btn').addEventListener('click', () => {
+                closeModal(dom.forgotPasswordModal);
+                openModal(dom.authModal);
+            });
+
+            document.getElementById('forgot-password-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const email = document.getElementById('reset-email').value;
+                const messageEl = document.getElementById('forgot-password-message');
+                
+                try {
+                    const { error } = await supabase.auth.resetPasswordForEmail(email, {
+                        redirectTo: window.location.origin,
+                    });
+                    
+                    if (error) throw error;
+                    
+                    messageEl.textContent = 'Password reset link sent to your email!';
+                    messageEl.className = 'mt-4 text-center text-sm text-green-500';
+                    
+                    // Clear form
+                    document.getElementById('reset-email').value = '';
+                    
+                } catch (error) {
+                    messageEl.textContent = error.message;
+                    messageEl.className = 'mt-4 text-center text-sm text-red-500';
+                }
+            });
+
+            document.getElementById('google-login-btn').addEventListener('click', () => supabase.auth.signInWithOAuth({ provider: 'google' }));
+            document.getElementById('facebook-login-btn').addEventListener('click', () => supabase.auth.signInWithOAuth({ provider: 'facebook' }));
+            document.getElementById('anonymous-login-link').addEventListener('click', () => supabase.auth.signInAnonymously());
+            
+            // Sidebar
+            document.getElementById('menu-toggle').addEventListener('click', () => {
+                dom.sidebar.classList.add('sidebar-open');
+                dom.sidebarOverlay.classList.remove('hidden');
+            });
+            document.getElementById('sidebar-close-btn').addEventListener('click', () => {
+                dom.sidebar.classList.remove('sidebar-open');
+                dom.sidebarOverlay.classList.add('hidden');
+            });
+            dom.sidebarOverlay.addEventListener('click', () => {
+                dom.sidebar.classList.remove('sidebar-open');
+                dom.sidebarOverlay.classList.add('hidden');
+            });
+            document.getElementById('new-chat-btn').addEventListener('click', startNewChat);
+            document.querySelectorAll('.sidebar-nav-btn').forEach(btn => btn.addEventListener('click', () => switchView(btn.dataset.view)));
+            document.querySelectorAll('.theme-btn').forEach(btn => btn.addEventListener('click', () => setTheme(btn.dataset.theme)));
+            
+            // History
+            dom.historyList.addEventListener('click', (e) => {
+                const button = e.target.closest('button');
+                if (button?.dataset.historyId) loadChatFromHistory(button.dataset.historyId);
+            });
+
+            // TTS
+            dom.chatHistory.addEventListener('click', async (e) => {
+                const button = e.target.closest('.tts-button');
+                if(!button || button.disabled) return;
+                const base64Text = button.dataset.ttsText;
+                button.disabled = true;
+                button.innerHTML = `<svg class="w-4 h-4 animate-spin" fill="currentColor" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg>`;
+                const audioData = await callTtsApi(decodeURIComponent(escape(atob(base64Text))));
+                if (audioData) {
+                    const audioContext = new (window.AudioContext)({ sampleRate: 24000 });
+                    const binaryString = atob(audioData); const len = binaryString.length; const bytes = new Uint8Array(len); for (let i = 0; i < len; i++) { bytes[i] = binaryString.charCodeAt(i); }
+                    const dataInt16 = new Int16Array(bytes.buffer); const frameCount = dataInt16.length; const buffer = audioContext.createBuffer(1, frameCount, 24000); const channelData = buffer.getChannelData(0); for (let i = 0; i < frameCount; i++) { channelData[i] = dataInt16[i] / 32768.0; }
+                    const source = audioContext.createBufferSource(); source.buffer = buffer; source.connect(audioContext.destination); source.start();
+                    source.onended = () => { button.disabled = false; button.innerHTML = `<svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M9.383 3.076A1 1 0 0110 3v14a1 1 0 01-1.383.924L4.031 15H2a1 1 0 01-1-1V6a1 1 0 011-1h2.031l5.968-3.924zM16 8a2 2 0 100 4 2 2 0 000-4z" clip-rule="evenodd"></path></svg>`; };
+                }
+            });
+
+            // Attachments
+            dom.attachmentBtn.addEventListener('click', () => dom.attachmentMenu.classList.toggle('hidden'));
+            dom.uploadFileBtn.addEventListener('click', () => dom.fileInput.click());
+            dom.useCameraBtn.addEventListener('click', () => { 
+                openModal(dom.cameraModal); 
+                navigator.mediaDevices.getUserMedia({ video: true })
+                    .then(stream => dom.cameraVideo.srcObject = stream)
+                    .catch(err => console.error("Camera error:", err));
+            });
+            dom.fileInput.addEventListener('change', (e) => {
+                const file = e.target.files[0]; if(!file) return;
+                const reader = new FileReader();
+                reader.onload = (event) => {
+                    const result = event.target.result;
+                    if(file.type.startsWith('image/')) currentAttachment = { type: 'image', fileName: file.name, data: result, mimeType: file.type };
+                    else if(file.type === 'text/plain') currentAttachment = { type: 'text', fileName: file.name, data: result };
+                    
+                    dom.attachmentPreview.classList.remove('hidden');
+                    dom.attachmentPreview.innerHTML = `${currentAttachment.type === 'image' ? `<img src="${result}" class="w-10 h-10 rounded mr-2 object-cover"/>` : ''}<span class="truncate">${file.name}</span><button id="remove-attachment-btn" class="absolute top-1 right-1 p-1 bg-gray-800 rounded-full hover:bg-red-500">&times;</button>`;
+                    document.getElementById('remove-attachment-btn').addEventListener('click', () => { currentAttachment = null; dom.attachmentPreview.classList.add('hidden'); dom.fileInput.value = ''; });
+                    dom.sendButton.disabled = isLoading || !user;
+                };
+                if(file.type.startsWith('image/')) reader.readAsDataURL(file);
+                else if(file.type === 'text/plain') reader.readAsText(file);
+                dom.attachmentMenu.classList.add('hidden');
+            });
+            document.getElementById('capture-photo-btn').addEventListener('click', () => {
+                const canvas = document.createElement('canvas'); 
+                canvas.width = dom.cameraVideo.videoWidth; 
+                canvas.height = dom.cameraVideo.videoHeight; 
+                canvas.getContext('2d').drawImage(dom.cameraVideo, 0, 0, canvas.width, canvas.height);
+                const dataUrl = canvas.toDataURL('image/jpeg');
+                currentAttachment = { type: 'image', fileName: 'capture.jpg', data: dataUrl, mimeType: 'image/jpeg' };
+                
+                // Add the captured image to the chat
+                dom.userInput.value = "Analyze this image";
+                handleSendMessage();
+                
+                closeModal(dom.cameraModal);
+                if (dom.cameraVideo.srcObject) dom.cameraVideo.srcObject.getTracks().forEach(track => track.stop());
+            });
+
+            // Coder
+            dom.generateCodeBtn.addEventListener('click', async () => {
+                toggleLoading(true);
+                dom.codeOutput.value = "Generating code...";
+                const code = await callCodeApi(dom.codePrompt.value, dom.codeLanguage.value);
+                dom.codeOutput.value = code;
+                dom.copyCodeBtn.disabled = !code;
+                toggleLoading(false);
+            });
+            dom.copyCodeBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(dom.codeOutput.value);
+                dom.copyCodeBtn.innerHTML = `Copied!`;
+                setTimeout(() => { dom.copyCodeBtn.innerHTML = `<svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"></path></svg> Copy`; }, 2000);
+            });
+
+            dom.chatContainer.classList.add('animate-load-in');
+            switchView('chat');
+        };
+
         initializeApp();
-        
+
     </script>
 </body>
 </html>
